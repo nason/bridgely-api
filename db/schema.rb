@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(version: 20130914211310) do
   add_index "v1_admin_companies", ["name"], name: "index_v1_admin_companies_on_name"
 
   create_table "v1_admin_users", force: true do |t|
-    t.string   "name",                               null: false
-    t.integer  "company_id",                         null: false
-    t.boolean  "admin",              default: false, null: false
-    t.string   "email",                              null: false
-    t.string   "encrypted_password",                 null: false
+    t.string   "name"
+    t.integer  "company_id"
+    t.boolean  "admin",              default: false
+    t.string   "email"
+    t.string   "encrypted_password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

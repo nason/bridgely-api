@@ -1,11 +1,11 @@
 class CreateV1AdminUsers < ActiveRecord::Migration
   def change
     create_table :v1_admin_users do |t|
-      t.string   "name",                   null: false
-      t.integer  "company_id",             null: false
-      t.boolean  "admin",                  default: false, null: false
-      t.string   "email",                  null: false
-      t.string   "encrypted_password",     null: false
+      t.string   "name"
+      t.integer  "company_id"
+      t.boolean  "admin",                  default: false
+      t.string   "email"
+      t.string   "encrypted_password"
 
       t.timestamps
     end

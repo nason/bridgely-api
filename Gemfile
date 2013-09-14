@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'rails-api'
+gem "active_model_serializers"
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -15,7 +16,7 @@ gem 'twilio-ruby'
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-gem 'jbuilder'
+# gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'
