@@ -1,4 +1,9 @@
 BridgelyApi::Application.routes.draw do
+  namespace :v1 do resources :questions, except: [:new, :edit] end
+  namespace :v1 do resources :messages, except: [:new, :edit] end
+  namespace :v1 do resources :employees, except: [:new, :edit] end
+  namespace :v1 do  namespace :admin do resources :users, except: [:new, :edit] end end
+  namespace :v1 do  namespace :admin do resources :companies, except: [:new, :edit] end end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
