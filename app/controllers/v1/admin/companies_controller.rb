@@ -1,4 +1,5 @@
 class V1::Admin::CompaniesController < ApplicationController
+
   # GET /v1/admin/companies
   # GET /v1/admin/companies.json
   def index
@@ -18,8 +19,6 @@ class V1::Admin::CompaniesController < ApplicationController
   # POST /v1/admin/companies
   # POST /v1/admin/companies.json
   def create
-    # user_params = {:name => params[:name], :email => params[:email], :company_id => params[:company_id], :encrypted_password => params[:encrypted_password] }
-    company_params = {:name => params[:name], :settings => params[:settings] }
 
     @v1_admin_company = V1::Admin::Company.new(company_params)
 
@@ -33,7 +32,6 @@ class V1::Admin::CompaniesController < ApplicationController
   # PATCH/PUT /v1/admin/companies/1
   # PATCH/PUT /v1/admin/companies/1.json
   def update
-    company_params = {:name => params[:name], :settings => params[:settings] }
 
     @v1_admin_company = V1::Admin::Company.find(params[:id])
 
@@ -51,5 +49,10 @@ class V1::Admin::CompaniesController < ApplicationController
     @v1_admin_company.destroy
 
     head :no_content
+  end
+
+  private
+  def company_params
+    params.require(:company).permit(:name, :settings)
   end
 end

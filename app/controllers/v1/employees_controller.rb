@@ -18,7 +18,7 @@ class V1::EmployeesController < ApplicationController
   # POST /v1/employees
   # POST /v1/employees.json
   def create
-    @v1_employee = V1::Employee.new(params[:v1_employee])
+    @v1_employee = V1::Employee.new(employee_params)
 
     if @v1_employee.save
       render json: @v1_employee, status: :created, location: @v1_employee
@@ -30,9 +30,10 @@ class V1::EmployeesController < ApplicationController
   # PATCH/PUT /v1/employees/1
   # PATCH/PUT /v1/employees/1.json
   def update
+    # TODO Strip company_id out of params here
     @v1_employee = V1::Employee.find(params[:id])
 
-    if @v1_employee.update(params[:v1_employee])
+    if @v1_employee.update(params[employee_params])
       head :no_content
     else
       render json: @v1_employee.errors, status: :unprocessable_entity
@@ -46,5 +47,10 @@ class V1::EmployeesController < ApplicationController
     @v1_employee.destroy
 
     head :no_content
+  end
+
+  private
+  def employee_params
+    params.require(:employee).permit(:name, :phone, :company_id, :data)
   end
 end

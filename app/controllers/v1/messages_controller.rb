@@ -1,4 +1,8 @@
 class V1::MessagesController < ApplicationController
+
+  # TODO: Strip out unnecessary params on update
+  # TODO: Setup serializer
+
   # GET /v1/messages
   # GET /v1/messages.json
   def index
@@ -18,7 +22,7 @@ class V1::MessagesController < ApplicationController
   # POST /v1/messages
   # POST /v1/messages.json
   def create
-    @v1_message = V1::Message.new(params[:v1_message])
+    @v1_message = V1::Message.new(message_params)
 
     if @v1_message.save
       render json: @v1_message, status: :created, location: @v1_message
@@ -32,7 +36,7 @@ class V1::MessagesController < ApplicationController
   def update
     @v1_message = V1::Message.find(params[:id])
 
-    if @v1_message.update(params[:v1_message])
+    if @v1_message.update(message_params)
       head :no_content
     else
       render json: @v1_message.errors, status: :unprocessable_entity
@@ -46,5 +50,10 @@ class V1::MessagesController < ApplicationController
     @v1_message.destroy
 
     head :no_content
+  end
+
+  private
+  def message_params
+    params.require(:message).permit(:company_id, :employee_id, :question_id, :body, :data, :direction, :status)
   end
 end

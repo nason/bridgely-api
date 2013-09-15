@@ -18,7 +18,6 @@ class V1::Admin::UsersController < ApplicationController
   # POST /v1/admin/users
   # POST /v1/admin/users.json
   def create
-    user_params = {:name => params[:name], :email => params[:email], :company_id => params[:company_id], :encrypted_password => params[:encrypted_password] }
     @v1_admin_user = V1::Admin::User.new(user_params)
 
     if @v1_admin_user.save
@@ -32,9 +31,7 @@ class V1::Admin::UsersController < ApplicationController
   # PATCH/PUT /v1/admin/users/1.json
   def update
     @v1_admin_user = V1::Admin::User.find(params[:id])
-
-    user_params = {:name => params[:name], :email => params[:email], :company_id => params[:company_id], :encrypted_password => params[:encrypted_password] }
-
+    # TODO strip :company_id and maybe :encrypted_password out of params here
     if @v1_admin_user.update(user_params)
       head :ok
     else
@@ -51,5 +48,10 @@ class V1::Admin::UsersController < ApplicationController
     else
       head :bad_request
     end
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :email, :company_id, :encryped_password)
   end
 end

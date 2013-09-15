@@ -1,4 +1,8 @@
 class V1::QuestionsController < ApplicationController
+
+  # TODO: Strip out unnecessary params
+  # TODO: Setup serializer
+
   # GET /v1/questions
   # GET /v1/questions.json
   def index
@@ -18,7 +22,7 @@ class V1::QuestionsController < ApplicationController
   # POST /v1/questions
   # POST /v1/questions.json
   def create
-    @v1_question = V1::Question.new(params[:v1_question])
+    @v1_question = V1::Question.new(question_params)
 
     if @v1_question.save
       render json: @v1_question, status: :created, location: @v1_question
@@ -32,7 +36,7 @@ class V1::QuestionsController < ApplicationController
   def update
     @v1_question = V1::Question.find(params[:id])
 
-    if @v1_question.update(params[:v1_question])
+    if @v1_question.update(question_params)
       head :no_content
     else
       render json: @v1_question.errors, status: :unprocessable_entity
@@ -46,5 +50,10 @@ class V1::QuestionsController < ApplicationController
     @v1_question.destroy
 
     head :no_content
+  end
+
+  private
+  def message_params
+    params.require(:question).permit(:company_id, :question, :response_tag)
   end
 end
