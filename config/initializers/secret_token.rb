@@ -16,4 +16,4 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-BridgelyApi::Application.config.secret_token = 'f81813476013ec806017faf39f1c20ff2491273fb9a4d1935d8f462b704c912c953969a9d47d2bdc2f13e660de5ffc2cf900b069e3c3d7c2ccfbd4e6664d4cc1'
+BridgelyApi::Application.config.secret_key_base = 'f81813476013ec806017faf39f1c20ff2491273fb9a4d1935d8f462b704c912c953969a9d47d2bdc2f13e660de5ffc2cf900b069e3c3d7c2ccfbd4e6664d4cc1'
