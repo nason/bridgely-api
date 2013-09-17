@@ -33,7 +33,7 @@ class V1::Admin::UsersController < ApplicationController
     @v1_admin_user = V1::Admin::User.find(params[:id])
     # TODO strip :company_id and maybe :encrypted_password out of params here
     if @v1_admin_user.update(user_params)
-      head :ok
+      render json: @v1_admin_user, status: :ok
     else
       render json: @v1_admin_user.errors, status: :unprocessable_entity
     end

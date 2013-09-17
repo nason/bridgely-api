@@ -37,7 +37,7 @@ class V1::QuestionsController < ApplicationController
     @v1_question = V1::Question.find(params[:id])
 
     if @v1_question.update(question_params)
-      head :no_content
+      render json: @v1_question, status: :ok
     else
       render json: @v1_question.errors, status: :unprocessable_entity
     end

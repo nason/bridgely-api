@@ -1,11 +1,17 @@
 class ApplicationController < ActionController::API
-  # CORS Headers
-  before_filter :cors
 
   # These are required to get rails-api to work correctly with strong parameters
   include ActionController::ParamsWrapper
   include ActionController::StrongParameters
 
+  # CORS Headers
+  before_filter :cors
+
+  # Add CSRF protection
+  include ActionController::RequestForgeryProtection
+
+  # enable CSRF protection on all controllers
+  protect_from_forgery with: :reset_session
 
   # This could be used to setup token authentication
   # include ActionController::HttpAuthentication::Token::ControllerMethods

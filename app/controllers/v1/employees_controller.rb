@@ -33,8 +33,8 @@ class V1::EmployeesController < ApplicationController
     # TODO Strip company_id out of params here
     @v1_employee = V1::Employee.find(params[:id])
 
-    if @v1_employee.update(params[employee_params])
-      head :no_content
+    if @v1_employee.update_attributes(employee_params)
+      render json: @v1_employee, status: :ok
     else
       render json: @v1_employee.errors, status: :unprocessable_entity
     end

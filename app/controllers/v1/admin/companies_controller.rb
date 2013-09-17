@@ -36,7 +36,7 @@ class V1::Admin::CompaniesController < ApplicationController
     @v1_admin_company = V1::Admin::Company.find(params[:id])
 
     if @v1_admin_company.update(company_params)
-      head :ok
+      render json: @v1_admin_company, status: :ok
     else
       render json: @v1_admin_company.errors, status: :unprocessable_entity
     end

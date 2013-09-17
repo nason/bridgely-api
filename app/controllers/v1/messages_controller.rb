@@ -37,7 +37,7 @@ class V1::MessagesController < ApplicationController
     @v1_message = V1::Message.find(params[:id])
 
     if @v1_message.update(message_params)
-      head :no_content
+      render json: @v1_message, status: :ok
     else
       render json: @v1_message.errors, status: :unprocessable_entity
     end
