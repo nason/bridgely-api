@@ -1,34 +1,76 @@
+# TODO: Unclear if AccountSID is the main account or subaccount, if it is the main account can do find by :to phone number
+# TODO: Create subaccount for each company, store it in company table
+# TODO: Add MessageSid column to message table
+# TODO: If incoming message corresponds to a message record with a question id, store response as a tag
+
 class V1::TwilioController < ApplicationController
 
   # POST /v1/twilio/inbound
-
+  # Request:  Twilio POSTS incoming text message data to this path
+  # Response: Twilio retrieves and executes TwiML returned
   def create
-    # @v1_twilio = V1::Twilio.new(params[:v1_twilio])
 
-    # if @v1_twilio.save
-    #   render json: @v1_twilio, status: :created, location: @v1_twilio
-    # else
-    #   render json: @v1_twilio.errors, status: :unprocessable_entity
-    # end
+    # Find the company associated with the AccountSid
+    @company = V1::Admin::Company.find_by_account_sid( twilio_params[:AccountSid] )
 
-    puts params
-    render :json=> {:success=>true}
+    if @company
 
+      # Find or the employee associated with the company_id and phone number
+      @employee = V1::Employee.find_by_phone( twilio_params[:phone] ).where( :company_id => @company.id )
+
+      if @employee
+
+        # If the employee exists, record the message
+        @message = V1::Message.new({
+          :employee_id => @employee.id,
+          :company_id  => @company.id,
+          :message_sid => twilio_params[:MessageSid],
+          :body        => twilio_params[:Body],
+          :status      => twilio_params[:SmsStatus]
+          :direction   => 'inbound'
+        })
+      else
+
+        # Create an employee record, and a message record
+        @employee = V1::Employee.new({
+          :company_id  => @company.id,
+          :name        => twilio_params[:Body],
+          :phone       => twilio_params[:From],
+        })
+
+        @message = V1::Message.new({
+          :employee_id => @employee.id,
+          :company_id  => @company.id,
+          :message_sid => twilio_params[:MessageSid],
+          :body        => twilio_params[:Body],
+          :status      => twilio_params[:SmsStatus]
+          :direction   => 'inbound'
+        })
+      end
+
+    end
+
+    # And then send a response? TwilML can go here, or we can create a new outbound message...
+    render :json=> {:success=>true}, status: :ok
   end
 
-  # PATCH/PUT /v1/twilio/status
+  # POST /v1/twilio/status
+  # Twilio makes this POST request when a API request to send an outgoing message has either succeeded or failed.
 
   def update
-    # @v1_twilio = V1::Twilio.find(params[:id])
 
-    # if @v1_twilio.update(params[:v1_twilio])
-    #   head :no_content
-    # else
-    #   render json: @v1_twilio.errors, status: :unprocessable_entity
-    # end
+    # Find the message by SID
+    @message = V1::Message.find_by_message_sid( twilio_params[:MessageSid] )
 
-    puts params
-    render :json=> {:success=>true}
+    # Update the status
+    @message.update_attribute( :status, twilio_params[:SmsStatus] )
+
+    render status: :ok
+  end
+
+  private
+  def twilio_params
+    params.permit( :AccountSid, :MessageSid, :Body, :To, :SmsStatus, :From )
   end
 
 end
