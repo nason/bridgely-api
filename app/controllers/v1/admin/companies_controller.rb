@@ -21,6 +21,9 @@ class V1::Admin::CompaniesController < ApplicationController
   # POST /v1/admin/companies.json
   def create
 
+    # TODO: Create a twillio subaccount for company, store reference in table
+    # TODO: Acquire a phone number for company, store reference in table
+
     @v1_admin_company = V1::Admin::Company.new(company_params)
 
     if @v1_admin_company.save
@@ -46,6 +49,10 @@ class V1::Admin::CompaniesController < ApplicationController
   # DELETE /v1/admin/companies/1
   # DELETE /v1/admin/companies/1.json
   def destroy
+
+    # TODO: Transfer number to main account? Or delete it?
+    # TODO: Delete or suspend subaccount?
+
     @v1_admin_company = V1::Admin::Company.find(params[:id])
     @v1_admin_company.destroy
 
