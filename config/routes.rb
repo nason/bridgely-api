@@ -1,13 +1,18 @@
 BridgelyApi::Application.routes.draw do
 
   namespace :v1 do
-    # devise_for :users, :class_name => "V1::Admin::User", :path => 'auth'
+    # Sessions
+    post "/auth/login"     => "sessions#create"
+    delete "/auth/logout"  => "sessions#destroy"
+
+    # Twilio
+    post "/twilio/inbound" => "twilio#create"
+    post "/twilio/status"  => "twilio#update"
+
     resources :questions, except: [:new, :edit]
     resources :messages, except: [:new, :edit]
     resources :employees, except: [:new, :edit]
-  end
 
-  namespace :v1 do
     namespace :admin do
       devise_for :users, :class_name => "V1::Admin::User", :skip => :all
       resources :users, except: [:new, :edit]
@@ -15,13 +20,10 @@ BridgelyApi::Application.routes.draw do
     end
   end
 
+  # CORS Headers
   match '*all' => 'application#cors', via: [:options], format: false
 
   #root :to => "v1/sessions#new"
-  post "/v1/auth/login"    => "v1/sessions#create"
-  delete "/v1/auth/logout" => "v1/sessions#destroy"
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
