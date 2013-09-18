@@ -48,6 +48,9 @@ GEM
     diff-lcs (1.2.4)
     erubis (2.7.0)
     ffi (1.9.0)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     formatador (0.2.4)
     guard (1.8.3)
       formatador (>= 0.2.4)
@@ -166,6 +169,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   debugger
   devise
+  figaro
   guard-bundler
   guard-rails
   guard-rspec
