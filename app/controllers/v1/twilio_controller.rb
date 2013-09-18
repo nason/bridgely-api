@@ -1,5 +1,3 @@
-# TODO: Unclear if AccountSID is the main account or subaccount, if it is the main account can do find by :to phone number
-# TODO: Create subaccount for each company, store it in company table
 # TODO: Add MessageSid column to message table
 # TODO: If incoming message corresponds to a message record with a question id, store response as a tag
 

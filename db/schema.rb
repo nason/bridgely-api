@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917234213) do
+ActiveRecord::Schema.define(version: 20130918234736) do
 
   create_table "v1_admin_companies", force: true do |t|
-    t.string   "name",       null: false
+    t.string   "name",        null: false
     t.string   "settings"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "account_sid"
   end
 
+  add_index "v1_admin_companies", ["account_sid"], name: "index_v1_admin_companies_on_account_sid"
   add_index "v1_admin_companies", ["name"], name: "index_v1_admin_companies_on_name"
 
   create_table "v1_admin_users", force: true do |t|

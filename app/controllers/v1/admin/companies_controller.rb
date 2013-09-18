@@ -1,3 +1,6 @@
+# TODO: Create a twillio subaccount for company, store reference in table
+# TODO: Acquire a phone number for company, store reference in table
+
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
 
@@ -20,9 +23,6 @@ class V1::Admin::CompaniesController < ApplicationController
   # POST /v1/admin/companies
   # POST /v1/admin/companies.json
   def create
-
-    # TODO: Create a twillio subaccount for company, store reference in table
-    # TODO: Acquire a phone number for company, store reference in table
 
     @v1_admin_company = V1::Admin::Company.new(company_params)
 
