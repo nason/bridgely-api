@@ -12,6 +12,7 @@ class V1::TwilioController < ApplicationController
     # end
 
     puts params
+    render :json=> {:success=>true}
 
   end
 
@@ -27,6 +28,7 @@ class V1::TwilioController < ApplicationController
     # end
 
     puts params
+    render :json=> {:success=>true}
   end
 
 end
