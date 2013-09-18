@@ -17,3 +17,5 @@
 
 # Ignore vendor dir
 /vendor
+# Ignore application configuration
+/config/application.yml
