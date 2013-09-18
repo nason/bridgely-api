@@ -1,4 +1,13 @@
+require 'securerandom'
+
 class V1::Admin::User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable,
+  # :database_authenticatable, :registerable, :recoverable, :rememberable
+
+  devise :database_authenticatable, :trackable, :validatable
+
+  before_save :generate_auth_token
 
   #Validations
   validates :email, :presence => true
@@ -8,5 +17,10 @@ class V1::Admin::User < ActiveRecord::Base
 
   #Associations
   belongs_to :company
+
+  private
+  def generate_auth_token
+    self.authorization_token = SecureRandom.base64(30).tr('+/=lIO0', 'pqrsxyz')
+  end
 
 end

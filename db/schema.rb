@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130914211310) do
+ActiveRecord::Schema.define(version: 20130917234213) do
 
   create_table "v1_admin_companies", force: true do |t|
     t.string   "name",       null: false
@@ -25,13 +25,20 @@ ActiveRecord::Schema.define(version: 20130914211310) do
   create_table "v1_admin_users", force: true do |t|
     t.string   "name"
     t.integer  "company_id"
-    t.boolean  "admin",              default: false
+    t.boolean  "admin",               default: false
     t.string   "email"
     t.string   "encrypted_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sign_in_count",       default: 0,     null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "authorization_token"
   end
 
+  add_index "v1_admin_users", ["authorization_token"], name: "index_v1_admin_users_on_authorization_token", unique: true
   add_index "v1_admin_users", ["company_id"], name: "index_v1_admin_users_on_company_id"
   add_index "v1_admin_users", ["email"], name: "index_v1_admin_users_on_email"
 

@@ -14,9 +14,10 @@ class ApplicationController < ActionController::API
   protect_from_forgery with: :reset_session
 
   # This could be used to setup token authentication
-  # include ActionController::HttpAuthentication::Token::ControllerMethods
+  include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  # before_filter :require_token
+  include ActionController::MimeResponds
+  include ActionController::ImplicitRender
 
   def cors
     headers['Access-Control-Allow-Origin'] = '*'
@@ -31,10 +32,10 @@ class ApplicationController < ActionController::API
 
   private
 
-  # def require_token
-  #   authenticate_or_request_with_http_token do |key, options|
-  #     @current_user = Token.find_by_key(key).account if Token.exists?(key: key)
-  #   end
-  # end
+  def require_token
+    authenticate_or_request_with_http_token do |key, options|
+      @current_user = V1::Admin::User.find_by_authorization_token(key) if V1::Admin::User.exists?(authorization_token: key)
+    end
+  end
 
 end

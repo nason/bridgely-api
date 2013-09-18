@@ -9,6 +9,8 @@ gem "active_model_serializers"
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+gem 'devise'
+
 # Use Twillio
 gem 'twilio-ruby'
 

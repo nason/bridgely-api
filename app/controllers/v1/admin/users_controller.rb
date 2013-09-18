@@ -23,6 +23,7 @@ class V1::Admin::UsersController < ApplicationController
     if @v1_admin_user.save
       render json: @v1_admin_user, status: :created, location: @v1_admin_user
     else
+      warden.custom_failure!
       render json: @v1_admin_user.errors, status: :unprocessable_entity
     end
   end
