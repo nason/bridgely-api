@@ -25,15 +25,16 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Deploy with Capistrano
 # gem 'capistrano', :group => :development
 
-gem "rspec-rails", :group => [:test, :development]
 group :test do
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem "rspec-rails"
+#  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'guard-rspec'
   gem 'sqlite3'
   gem 'debugger'
 end
 
 group :development do
+  gem "rspec-rails"
   gem 'guard-rails'
   gem 'guard-bundler'
   gem 'sqlite3'

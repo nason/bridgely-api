@@ -173,7 +173,6 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails-api
   rails_12factor
-  rb-fsevent
   rspec-rails
   sqlite3
   twilio-ruby
