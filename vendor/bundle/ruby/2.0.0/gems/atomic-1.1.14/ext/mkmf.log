@@ -1,0 +1,26 @@
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {
+4:   int i = 1;
+5:   __sync_bool_compare_and_swap(&i, 1, 4);
+6:   return (i != 4);
+7: }
+/* end */
+
+./conftest

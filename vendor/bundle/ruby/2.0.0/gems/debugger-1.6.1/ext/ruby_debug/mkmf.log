@@ -1,0 +1,234 @@
+have_struct_member: checking for rb_method_entry_t.called_id in method.h... -------------------- no
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/.rvm/src/ruby-2.0.0-p247 -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/.rvm/src/ruby-2.0.0-p247 -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+conftest.c:3:10: fatal error: 'method.h' file not found
+#include <method.h>
+         ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <method.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((rb_method_entry_t*)0)->called_id - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &s);
+11:   }
+12: 
+13:   return 0;
+14: }
+/* end */
+
+--------------------
+
+have_struct_member: checking for rb_control_frame_t.method_id in method.h... -------------------- no
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/.rvm/src/ruby-2.0.0-p247 -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+conftest.c:3:10: fatal error: 'method.h' file not found
+#include <method.h>
+         ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <method.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((rb_control_frame_t*)0)->method_id - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &s);
+11:   }
+12: 
+13:   return 0;
+14: }
+/* end */
+
+--------------------
+
+have_struct_member: checking for rb_method_entry_t.called_id in method.h... -------------------- no
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+conftest.c:3:10: fatal error: 'method.h' file not found
+#include <method.h>
+         ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <method.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((rb_method_entry_t*)0)->called_id - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &s);
+11:   }
+12: 
+13:   return 0;
+14: }
+/* end */
+
+--------------------
+
+have_struct_member: checking for rb_control_frame_t.method_id in method.h... -------------------- no
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+conftest.c:3:10: fatal error: 'method.h' file not found
+#include <method.h>
+         ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <method.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((rb_control_frame_t*)0)->method_id - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &s);
+11:   }
+12: 
+13:   return 0;
+14: }
+/* end */
+
+--------------------
+
+have_struct_member: checking for rb_method_entry_t.called_id in method.h... -------------------- yes
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <method.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((rb_method_entry_t*)0)->called_id - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   if (argc > 1000000) {
+10:     printf("%p", &s);
+11:   }
+12: 
+13:   return 0;
+14: }
+/* end */
+
+--------------------
+
+have_header: checking for vm_core.h... -------------------- yes
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <vm_core.h>
+/* end */
+
+--------------------
+
+have_header: checking for iseq.h... -------------------- yes
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <iseq.h>
+/* end */
+
+--------------------
+
+have_header: checking for insns.inc... -------------------- yes
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <insns.inc>
+/* end */
+
+--------------------
+
+have_header: checking for insns_info.inc... -------------------- yes
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <insns_info.inc>
+/* end */
+
+--------------------
+
+have_header: checking for eval_intern.h... -------------------- yes
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <eval_intern.h>
+/* end */
+
+--------------------
+
+have_type: checking for struct iseq_line_info_entry in vm_core.h,iseq.h... -------------------- yes
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <vm_core.h>
+4: #include <iseq.h>
+5: 
+6: /*top*/
+7: typedef struct iseq_line_info_entry conftest_type;
+8: int conftestval[sizeof(conftest_type)?1:-1];
+/* end */
+
+--------------------
+
+block in <main>: checking for if rb_iseq_compile_with_option was added an argument filepath... -------------------- yes
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -I/Users/michaelnason/Desktop/HackReactor/ForUs/bridgely-api/vendor/bundle/ruby/2.0.0/gems/debugger-ruby_core_source-1.2.3/lib/debugger/ruby_core_source/ruby-2.0.0-p247 -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <ruby.h>
+4: #include "vm_core.h"
+5: extern VALUE rb_iseq_new_main(NODE *node, VALUE filename, VALUE filepath);
+/* end */
+
+--------------------
+

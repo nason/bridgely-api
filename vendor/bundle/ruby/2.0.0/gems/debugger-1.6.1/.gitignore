@@ -1,0 +1,14 @@
+tmp
+vendor/bundle
+
+.rvmrc
+.gdbinit
+.gdb_history
+.bundle
+
+lib/ruby_debug.bundle
+ext/ruby_debug/breakpoint.c
+ext/ruby_debug/ruby_debug.c
+ext/ruby_debug/ruby_debug.h
+
+Gemfile.lock

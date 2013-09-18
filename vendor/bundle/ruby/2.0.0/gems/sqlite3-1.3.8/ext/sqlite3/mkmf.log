@@ -1,0 +1,486 @@
+find_header: checking for sqlite3.h... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"/usr/bin/clang -E -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <sqlite3.h>
+/* end */
+
+--------------------
+
+find_library: checking for sqlite3_libversion_number() in -lsqlite3... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_libversion_number'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_libversion_number; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_libversion_number; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64   -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_libversion_number' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_libversion_number(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_libversion_number(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for rb_proc_arity()... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_proc_arity; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_initialize()... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_initialize'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_initialize; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_initialize; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_initialize' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_initialize(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_initialize(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_backup_init()... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_backup_init'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_backup_init; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_backup_init; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_backup_init' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_backup_init(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_backup_init(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_column_database_name()... -------------------- no
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_column_database_name'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_column_database_name; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_column_database_name; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_column_database_name' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_column_database_name(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+Undefined symbols for architecture x86_64:
+  "_sqlite3_column_database_name", referenced from:
+      _t in conftest-UQFKBD.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_column_database_name(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_enable_load_extension()... -------------------- no
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_enable_load_extension'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_enable_load_extension; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_enable_load_extension; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_enable_load_extension' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_enable_load_extension(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+Undefined symbols for architecture x86_64:
+  "_sqlite3_enable_load_extension", referenced from:
+      _t in conftest-dx0Uc4.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_enable_load_extension(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_load_extension()... -------------------- no
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_load_extension'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_load_extension; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_load_extension; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_load_extension' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_load_extension(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+Undefined symbols for architecture x86_64:
+  "_sqlite3_load_extension", referenced from:
+      _t in conftest-N7Vwnh.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_load_extension(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_open_v2()... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_open_v2'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_open_v2; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_open_v2; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_open_v2' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_open_v2(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_open_v2(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_func: checking for sqlite3_prepare_v2()... -------------------- yes
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:57: error: use of undeclared identifier 'sqlite3_prepare_v2'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_prepare_v2; return 0; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { void ((*volatile p)()); p = (void ((*)()))sqlite3_prepare_v2; return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+"/usr/bin/clang -o conftest -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe conftest.c  -L. -L/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/lib -L.  -L/Users/mpapis/.sm/pkg/active/lib -L/usr/lib -fPIC -Bstatic -fstack-protector   -arch x86_64  -lsqlite3  -lruby-static -lsqlite3  -lpthread -ldl -lobjc "
+conftest.c:5:15: warning: implicit declaration of function 'sqlite3_prepare_v2' is invalid in C99 [-Wimplicit-function-declaration]
+int t(void) { sqlite3_prepare_v2(); return 0; }
+              ^
+1 warning generated.
+ld: warning: directory not found for option '-L/Users/mpapis/.sm/pkg/active/lib'
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int t(void) { sqlite3_prepare_v2(); return 0; }
+ 6: int main(int argc, char **argv)
+ 7: {
+ 8:   if (argc > 1000000) {
+ 9:     printf("%p", &t);
+10:   }
+11: 
+12:   return 0;
+13: }
+/* end */
+
+--------------------
+
+have_type: checking for sqlite3_int64 in sqlite3.h... -------------------- yes
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <sqlite3.h>
+4: 
+5: /*top*/
+6: typedef sqlite3_int64 conftest_type;
+7: int conftestval[sizeof(conftest_type)?1:-1];
+/* end */
+
+--------------------
+
+have_type: checking for sqlite3_uint64 in sqlite3.h... -------------------- yes
+
+"/usr/bin/clang -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/x86_64-darwin12.3.0 -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0/ruby/backward -I/Users/michaelnason/.rvm/rubies/ruby-2.0.0-p247/include/ruby-2.0.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -I/Users/mpapis/.sm/pkg/active/include -fPIC -pipe  -arch x86_64  -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <sqlite3.h>
+4: 
+5: /*top*/
+6: typedef sqlite3_uint64 conftest_type;
+7: int conftestval[sizeof(conftest_type)?1:-1];
+/* end */
+
+--------------------
+
