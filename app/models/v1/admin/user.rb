@@ -7,7 +7,7 @@ class V1::Admin::User < ActiveRecord::Base
 
   devise :database_authenticatable, :trackable, :validatable
 
-  before_save :generate_auth_token
+  before_save :ensure_authorization_token
 
   #Validations
   validates :email, :presence => true
@@ -18,8 +18,18 @@ class V1::Admin::User < ActiveRecord::Base
   #Associations
   belongs_to :company
 
+  # def reset_authentication_token
+  #   self.authentication_token = nil
+  #   self.save
+  # end
+
+
   private
-  def generate_auth_token
+  def ensure_authorization_token
+    generate_authorization_token if self.authorization_token.nil?
+  end
+
+  def generate_authorization_token
     self.authorization_token = SecureRandom.base64(30).tr('+/=lIO0', 'pqrsxyz')
   end
 

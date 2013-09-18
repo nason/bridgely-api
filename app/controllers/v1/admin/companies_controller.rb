@@ -1,4 +1,5 @@
 class V1::Admin::CompaniesController < ApplicationController
+  before_filter :require_token
 
   # GET /v1/admin/companies
   # GET /v1/admin/companies.json

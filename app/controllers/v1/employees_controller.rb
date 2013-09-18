@@ -1,4 +1,6 @@
 class V1::EmployeesController < ApplicationController
+  before_filter :require_token
+
   # GET /v1/employees
   # GET /v1/employees.json
   def index

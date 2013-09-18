@@ -8,16 +8,19 @@ class ApplicationController < ActionController::API
   before_filter :cors
 
   # Add CSRF protection
-  include ActionController::RequestForgeryProtection
+  # include ActionController::RequestForgeryProtection
 
   # enable CSRF protection on all controllers
-  protect_from_forgery with: :reset_session
+  # protect_from_forgery with: :reset_session
 
-  # This could be used to setup token authentication
+  # Setup token authentication
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  # Enable Devise
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
+
+  private
 
   def cors
     headers['Access-Control-Allow-Origin'] = '*'
@@ -29,8 +32,6 @@ class ApplicationController < ActionController::API
     # headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
     # headers['Access-Control-Max-Age'] = '86400'
   end
-
-  private
 
   def require_token
     authenticate_or_request_with_http_token do |key, options|

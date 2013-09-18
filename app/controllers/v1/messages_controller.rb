@@ -1,4 +1,5 @@
 class V1::MessagesController < ApplicationController
+  before_filter :require_token
 
   # TODO: Strip out unnecessary params on update
   # TODO: Setup serializer

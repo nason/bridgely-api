@@ -1,4 +1,5 @@
 class V1::QuestionsController < ApplicationController
+  before_filter :require_token
 
   # TODO: Strip out unnecessary params
   # TODO: Setup serializer
