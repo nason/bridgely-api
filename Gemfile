@@ -6,9 +6,6 @@ gem 'rails', '4.0.0'
 gem 'rails-api'
 gem "active_model_serializers"
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-
 gem 'devise'
 
 # Use Twillio
@@ -33,9 +30,17 @@ gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'guard-rspec'
+  gem 'sqlite3'
 end
 
 group :development do
   gem 'guard-rails'
   gem 'guard-bundler'
+  gem 'sqlite3'
+end
+
+# Heroku gems
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
 end
