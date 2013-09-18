@@ -6,7 +6,6 @@ class ApplicationController < ActionController::API
 
   # CORS Headers
   before_filter :cors
-  before_filter :create_twilio_client
 
   # Add CSRF protection
   # include ActionController::RequestForgeryProtection
@@ -42,7 +41,7 @@ class ApplicationController < ActionController::API
 
   def create_twilio_client
     # Instantiate twilio client if it doesn't already exist
-    @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_auth_token if @twilio_client.nil?
+    @twilio_client = Twilio::REST::Client.new( TWILIO_SID, TWILIO_AUTH_TOKEN ) if @twilio_client.nil?
   end
 
 end
