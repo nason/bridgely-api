@@ -66,7 +66,7 @@ class V1::MessagesController < ApplicationController
     @company = V1::Admin::Company.find(@v1_message.company_id)
     @body = @v1_message.body
 
-    @account.sms.messages.create({
+    @account.messages.create({
       :from => @account_number,
       :to => @recipient.phone,
       :body => @body
