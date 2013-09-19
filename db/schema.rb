@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130919005626) do
+ActiveRecord::Schema.define(version: 20130919171224) do
 
   create_table "v1_admin_companies", force: true do |t|
     t.string   "name",                    null: false
@@ -67,10 +67,12 @@ ActiveRecord::Schema.define(version: 20130919005626) do
     t.string   "status",      default: "pending", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message_sid"
   end
 
   add_index "v1_messages", ["company_id"], name: "index_v1_messages_on_company_id"
   add_index "v1_messages", ["employee_id"], name: "index_v1_messages_on_employee_id"
+  add_index "v1_messages", ["message_sid"], name: "index_v1_messages_on_message_sid"
   add_index "v1_messages", ["question_id"], name: "index_v1_messages_on_question_id"
 
   create_table "v1_questions", force: true do |t|
