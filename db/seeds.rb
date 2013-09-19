@@ -9,6 +9,6 @@
 admin = V1::Admin::User.create( {name: 'Admin User', email: 'michael@nason.us', password: 'test_password' } )
 admin.update_attribute( :admin, true )
 
-forus = V1::Admin::Company.create( {name: 'ForUs'} )
+forus = V1::Admin::Company.create( {name: 'ForUs', account_sid: TWILIO_SID } )
 
 forus_employee = V1::Employee.create( {name: 'Michael Nason', phone: '817-992-9364', company_id: forus.id } )
