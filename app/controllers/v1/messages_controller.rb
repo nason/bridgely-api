@@ -26,7 +26,7 @@ class V1::MessagesController < ApplicationController
     @v1_message = V1::Message.new(message_params)
 
     if @v1_message.save
-      @v1_message.update :message_sid => send_sms_message
+      @v1_message.update :message_sid => send_sms_message, :status => 'sent'
       render json: @v1_message, status: :created, location: @v1_message
     else
       render json: @v1_message.errors, status: :unprocessable_entity
