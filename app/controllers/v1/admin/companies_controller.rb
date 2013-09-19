@@ -1,5 +1,3 @@
-# TODO: Setup settings column in companies to be TEXT not string, and setup serialization
-
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
   before_filter :create_twilio_client, only: [:create, :destroy]
