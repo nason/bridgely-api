@@ -29,7 +29,7 @@ class V1::TwilioController < ApplicationController
         :company_id  => @company.id,
         :message_sid => twilio_params[:MessageSid],
         :body        => twilio_params[:Body],
-        :status      => twilio_params[:SmsStatus]
+        :status      => twilio_params[:SmsStatus],
         :direction   => 'inbound'
       })
 
