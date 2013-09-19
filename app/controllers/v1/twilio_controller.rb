@@ -14,7 +14,7 @@ class V1::TwilioController < ApplicationController
 
     if @company
 
-      # Find or the employee associated with the company_id and phone number
+      # Find the employee associated with the company_id and phone number
       @employee = V1::Employee.find_by phone: twilio_params[:phone], company_id: @company.id
 
       # Create the employee if record does not exist
@@ -49,7 +49,7 @@ class V1::TwilioController < ApplicationController
     @message = V1::Message.find_by message_sid: twilio_params[:MessageSid]
 
     # Update the status
-    @message.update_attribute( :status, twilio_params[:SmsStatus] )
+    @message.update( status: twilio_params[:SmsStatus] )
 
     render status: :ok
   end
