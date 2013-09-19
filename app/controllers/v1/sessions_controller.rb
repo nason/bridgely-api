@@ -25,8 +25,7 @@ class V1::SessionsController < ApplicationController
   def destroy
     if @current_user
       sign_out(current_v1_admin_user)
-      @current_user.authorization_token = nil
-      render json: { success: true }, status: :ok if @current_user.save
+      render :json => { success: true }, status: :ok if @current_user.update_attribute(:authorization_token, nil)
     else
       # This shouldnt ever happen, but just in case
       invalid_logout_attempt
