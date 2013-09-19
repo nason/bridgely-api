@@ -16,35 +16,22 @@ class V1::TwilioController < ApplicationController
       # Find or the employee associated with the company_id and phone number
       @employee = V1::Employee.find_by_phone( twilio_params[:phone] ).where( :company_id => @company.id )
 
-      if @employee
+      # Create the employee if record does not exist
+      @employee = V1::Employee.create({
+        :company_id  => @company.id,
+        :name        => twilio_params[:Body],
+        :phone       => twilio_params[:From],
+      }) unless @employee
 
-        # If the employee exists, record the message
-        @message = V1::Message.new({
-          :employee_id => @employee.id,
-          :company_id  => @company.id,
-          :message_sid => twilio_params[:MessageSid],
-          :body        => twilio_params[:Body],
-          :status      => twilio_params[:SmsStatus]
-          :direction   => 'inbound'
-        })
-      else
-
-        # Create an employee record, and a message record
-        @employee = V1::Employee.new({
-          :company_id  => @company.id,
-          :name        => twilio_params[:Body],
-          :phone       => twilio_params[:From],
-        })
-
-        @message = V1::Message.new({
-          :employee_id => @employee.id,
-          :company_id  => @company.id,
-          :message_sid => twilio_params[:MessageSid],
-          :body        => twilio_params[:Body],
-          :status      => twilio_params[:SmsStatus]
-          :direction   => 'inbound'
-        })
-      end
+      # Create the message
+      @message = V1::Message.create({
+        :employee_id => @employee.id,
+        :company_id  => @company.id,
+        :message_sid => twilio_params[:MessageSid],
+        :body        => twilio_params[:Body],
+        :status      => twilio_params[:SmsStatus]
+        :direction   => 'inbound'
+      })
 
     end
 
