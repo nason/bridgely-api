@@ -23,11 +23,11 @@ class V1::MessagesController < ApplicationController
   # POST /v1/messages
   # Send an OUTGOING SMS message
   def create
-    @v1_message = V1::Message.create(message_params)
+    @v1_message = V1::Message.new(message_params)
 
     if @v1_message.save
+      @v1_message.update :message_sid => send_sms_message
       render json: @v1_message, status: :created, location: @v1_message
-      send_sms_message
     else
       render json: @v1_message.errors, status: :unprocessable_entity
     end
@@ -66,7 +66,7 @@ class V1::MessagesController < ApplicationController
     @company = V1::Admin::Company.find(@v1_message.company_id)
     @body = @v1_message.body
 
-    @account.messages.create({
+    @message = @account.messages.create({
       :from => @account_number,
       :to => @recipient.phone,
       :body => @body
@@ -74,6 +74,8 @@ class V1::MessagesController < ApplicationController
       # Interpolation can create cool replies
       # :body => "Responding from #{@account_number} to #{@recipient.name}, employee of #{@company.name}!"
     })
+
+    return @message.sid
   end
 
 end
