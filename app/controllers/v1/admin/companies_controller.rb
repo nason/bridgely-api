@@ -28,7 +28,7 @@ class V1::Admin::CompaniesController < ApplicationController
     @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
 
     # Purchase the first available US phone number for the subaccount.
-    # Use a Twilio App to configure all numbers to callback the same resources;
+    # Use the Bridgely Twilio App SID to configure all numbers to callback the same resources;
     # This could be done on a per-account basis in the future.
     @number = @subaccount.available_phone_numbers.get('US').local.list.first.phone_number
     @subaccount.incoming_phone_numbers.create(

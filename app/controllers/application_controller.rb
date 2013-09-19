@@ -40,6 +40,7 @@ class ApplicationController < ActionController::API
   end
 
   def create_twilio_client
+
     # Instantiate twilio client if it doesn't already exist
     @twilio_client = Twilio::REST::Client.new( TWILIO_SID, TWILIO_AUTH_TOKEN ) if @twilio_client.nil?
   end
