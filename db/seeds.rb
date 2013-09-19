@@ -9,6 +9,16 @@
 admin = V1::Admin::User.create( {name: 'Admin User', email: 'michael@nason.us', password: 'test_password' } )
 admin.update_attribute( :admin, true )
 
-forus = V1::Admin::Company.create( {name: 'ForUs', account_sid: TWILIO_SID } )
+forus = V1::Admin::Company.create(
+  name: 'ForUs',
+  account_sid: TWILIO_SID,
+  settings: { account_phone_number: '+15106069589' }
+)
 
 forus_employee = V1::Employee.create( {name: 'Michael Nason', phone: '817-992-9364', company_id: forus.id } )
+
+hr = V1::Admin::Company.create(
+  name: 'HackReactor',
+  account_sid: 'AC5482b1ad8f317075aaa8dd8f6f7ca76e',
+  settings: { account_phone_number: '+17864310738' }
+)
