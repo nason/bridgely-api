@@ -1,7 +1,8 @@
-# TODO: Add MessageSid column to message table
 # TODO: If incoming message corresponds to a message record with a question id, store response as a tag
+# TODO: Make sure Twilio requests pass validation for main and subaccounts
 
 class V1::TwilioController < ApplicationController
+  before_filter :validate_twilio_header
 
   # POST /v1/twilio/inbound
   # Request:  Twilio POSTS incoming text message data to this path
@@ -56,6 +57,27 @@ class V1::TwilioController < ApplicationController
   private
   def twilio_params
     params.permit( :AccountSid, :MessageSid, :Body, :To, :SmsStatus, :From )
+  end
+
+  def validate_twilio_header
+    # First, instantiate a RequestValidator object with your account's AuthToken.
+    validator = Twilio::Util::RequestValidator.new( TWILIO_AUTH_TOKEN )
+
+    # Then gather the data required to validate the request
+    uri = request.original_url
+
+    # Collect all parameters passed from Twilio.
+    params = env['rack.request.form_hash']
+
+    # Grab the signature from the HTTP header.
+    signature = env['HTTP_X_TWILIO_SIGNATURE']
+
+    puts uri
+    puts params
+    puts signature
+
+    # Finally, call the validator's #validate method.
+    head(422) unless validator.validate(uri, params, signature) #=> true if the request is from Twilio
   end
 
 end

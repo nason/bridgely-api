@@ -4,7 +4,7 @@ class V1::Admin::Company < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  validates :account_sid, presence: true
+  # validates :account_sid, presence: true
 
   # Associations
   has_many :users

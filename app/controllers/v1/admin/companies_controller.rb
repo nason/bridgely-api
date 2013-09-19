@@ -29,9 +29,14 @@ class V1::Admin::CompaniesController < ApplicationController
     # Create a subaccount for the company
     @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
 
-    # Purchase the first available US phone number for the subaccount
+    # Purchase the first available US phone number for the subaccount.
+    # Use a Twilio App to configure all numbers to callback the same resources;
+    # This could be done on a per-account basis in the future.
     @number = @subaccount.available_phone_numbers.get('US').local.list.first.phone_number
-    @subaccount.incoming_phone_numbers.create(:phone_number => @number)
+    @subaccount.incoming_phone_numbers.create(
+      :phone_number => @number,
+      :sms_application_sid => TWILIO_APP_SID
+    )
 
     # Store the company's account_sid in DB
     @v1_admin_company.account_sid = @subaccount.sid
