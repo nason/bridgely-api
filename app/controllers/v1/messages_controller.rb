@@ -60,10 +60,10 @@ class V1::MessagesController < ApplicationController
   end
 
   def send_sms_message
-    @account = @twilio_client.account
-    @account_number = @account.incoming_phone_numbers.list.first.phone_number
-    @recipient = V1::Employee.find(@v1_message.employee_id)
     @company = V1::Admin::Company.find(@v1_message.company_id)
+    @account = @twilio_client.accounts.get(@company.account_sid)
+    @account_number = @company.settings.account_phone_number
+    @recipient = V1::Employee.find(@v1_message.employee_id)
     @body = @v1_message.body
 
     @message = @account.messages.create({
