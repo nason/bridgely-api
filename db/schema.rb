@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130918234736) do
+ActiveRecord::Schema.define(version: 20130919005626) do
 
   create_table "v1_admin_companies", force: true do |t|
-    t.string   "name",        null: false
-    t.string   "settings"
+    t.string   "name",                    null: false
+    t.text     "settings",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "account_sid"

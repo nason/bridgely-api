@@ -23,7 +23,7 @@ class V1::MessagesController < ApplicationController
   # POST /v1/messages
   # Send an OUTGOING SMS message
   def create
-    @v1_message = V1::Message.new(message_params)
+    @v1_message = V1::Message.create(message_params)
 
     if @v1_message.save
       render json: @v1_message, status: :created, location: @v1_message

@@ -1,8 +1,8 @@
-# TODO: Create a twillio subaccount for company, store reference in table
-# TODO: Acquire a phone number for company, store reference in table
+# TODO: Setup settings column in companies to be TEXT not string, and setup serialization
 
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
+  before_filter :create_twilio_client, only: [:create, :destroy]
 
   # GET /v1/admin/companies
   # GET /v1/admin/companies.json
@@ -25,6 +25,19 @@ class V1::Admin::CompaniesController < ApplicationController
   def create
 
     @v1_admin_company = V1::Admin::Company.new(company_params)
+
+    # Create a subaccount for the company
+    @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
+
+    # Purchase the first available US phone number for the subaccount
+    @number = @subaccount.available_phone_numbers.get('US').local.list.first.phone_number
+    @subaccount.incoming_phone_numbers.create(:phone_number => @number)
+
+    # Store the company's account_sid in DB
+    @v1_admin_company.account_sid = @subaccount.sid
+
+    # Store the company's twilio phone in settings
+    @v1_admin_company.settings = { :account_phone_number => @number }
 
     if @v1_admin_company.save
       render json: @v1_admin_company, status: :created, location: @v1_admin_company
