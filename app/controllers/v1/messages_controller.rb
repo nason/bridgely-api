@@ -1,10 +1,10 @@
+# TODO: employee_id param should also accept the string 'all' to send to whole company
+
 # TODO: Setup serializer
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
 # TODO: Utilize the employee_message table in the Message, Question and Twilio controllers
-TODO: employee_id param should be employee_ids => an array of employees to be
-       sent the message, or the string 'all' to send to whole company
-TODO: Update send_sms_message to send a message for each id in the employee_ids array
+
 # TODO: Dont take question_id param, question controller will create question record and message record
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
 # TODO: Consider concentrating Twillio integration methods into employee_message model
@@ -36,8 +36,12 @@ class V1::MessagesController < ApplicationController
   def create
     @v1_message = V1::Message.new( message_params.except(:employee_ids) )
 
+    # :employees_ids is a string list of ids, convert it into an array
+    @v1_message.employee_ids = message_params[:employee_ids].split(",").map { |s| s.to_i }
+
     if @v1_message.save
-      @v1_message.update :message_sid => send_sms_message, :status => 'sent'
+      # @v1_message.update :message_sid => send_sms_message, :status => 'sent'
+      send_sms_messages
       render json: @v1_message, status: :created, location: @v1_message
     else
       render json: @v1_message.errors, status: :unprocessable_entity
@@ -67,26 +71,37 @@ class V1::MessagesController < ApplicationController
 
   private
   def message_params
-    params.require(:message).permit(:company_id, :employee_ids, :question_id, :body, :data, :direction, :status)
+    params.require(:message).permit(:company_id, :employee_ids, :question_id, :body)
   end
 
-  def send_sms_message
-    @company = V1::Admin::Company.find(@v1_message.company_id)
+  def send_sms_messages
+    # TODO: if :employee_ids === 'all' do something else, send to all the companys employees
+    # TODO: verify that employee belongs to company before sending
+
+    @company = @v1_message.company
     @account = @twilio_client.accounts.get(@company.account_sid)
     @account_number = @company.settings[:account_phone_number]
-    @recipient = V1::Employee.find(@v1_message.employee_id)
     @body = @v1_message.body
 
-    @message = @account.messages.create({
-      :from => @account_number,
-      :to => @recipient.phone,
-      :body => @body
-      # Above is for an incoming message
-      # Interpolation can create cool replies
-      # :body => "Responding from #{@account_number} to #{@recipient.name}, employee of #{@company.name}!"
-    })
 
-    return @message.sid
+    @recipients = V1::Employee.find( @v1_message.employee_ids )
+
+    @recipients.each do |recipient|
+      @sms = @account.messages.create({
+        :from => @account_number,
+        :to => recipient.phone,
+        :body => @body
+        # Above is for an incoming message
+        # Interpolation can create cool replies =>
+        # :body => "Responding from #{@account_number} to #{@recipient.name}, employee of #{@company.name}!"
+      })
+
+      @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
+      @activity.update(
+        message_sid: @sms.sid,
+        sms_status: @sms.status
+      )
+    end
   end
 
 end
