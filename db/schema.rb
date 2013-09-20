@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20130920021309) do
     t.integer "v1_employee_id"
     t.integer "v1_message_id"
     t.integer "v1_question_id"
+    t.string  "message_sid",    default: "pending", null: false
   end
 
   add_index "v1_employees_v1_messages", ["v1_employee_id"], name: "index_v1_employees_v1_messages_on_v1_employee_id"
