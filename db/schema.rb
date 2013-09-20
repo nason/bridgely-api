@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920021309) do
+ActiveRecord::Schema.define(version: 20130920031815) do
 
   create_table "v1_admin_companies", force: true do |t|
     t.string   "name",                    null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20130920021309) do
     t.integer  "company_id", null: false
     t.string   "phone",      null: false
     t.string   "name",       null: false
-    t.string   "data"
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,13 +69,12 @@ ActiveRecord::Schema.define(version: 20130920021309) do
   add_index "v1_employees_v1_messages", ["v1_question_id"], name: "index_v1_employees_v1_messages_on_v1_question_id"
 
   create_table "v1_messages", force: true do |t|
-    t.integer  "company_id",                      null: false
-    t.integer  "employee_id",                     null: false
+    t.integer  "company_id",                       null: false
+    t.integer  "employee_id",                      null: false
     t.integer  "question_id"
-    t.string   "body",                            null: false
-    t.string   "data"
-    t.string   "direction",                       null: false
-    t.string   "status",      default: "pending", null: false
+    t.string   "body",                             null: false
+    t.string   "direction",   default: "outbound", null: false
+    t.string   "status",      default: "pending",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "message_sid"
@@ -87,14 +86,12 @@ ActiveRecord::Schema.define(version: 20130920021309) do
   add_index "v1_messages", ["question_id"], name: "index_v1_messages_on_question_id"
 
   create_table "v1_questions", force: true do |t|
-    t.string   "company_id",   null: false
     t.string   "question",     null: false
     t.string   "response_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "v1_questions", ["company_id"], name: "index_v1_questions_on_company_id"
   add_index "v1_questions", ["response_tag"], name: "index_v1_questions_on_response_tag"
 
 end
