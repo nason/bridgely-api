@@ -15,24 +15,30 @@ class V1::TwilioController < ApplicationController
     if @company
 
       # Find the employee associated with the company_id and phone number
-      @employee = V1::Employee.find_by phone: twilio_params[:phone], company_id: @company.id
+      @employee = V1::Employee.find_or_initialize_by phone: twilio_params[:From], company_id: @company.id
 
       # Create the employee if record does not exist
-      @employee = V1::Employee.create({
-        :company_id  => @company.id,
+      @employee = V1::Employee.update({
         :name        => twilio_params[:Body],
-        :phone       => twilio_params[:From],
-      }) unless @employee
+      }) unless @employee.persisted?
+
+      # TODO: Else add the response as a tag or a label, find last question sent to employee and associate it
 
       # Create the message
-      @message = V1::Message.create({
-        :employee_id => @employee.id,
+      @message = @employee.messages.create({
         :company_id  => @company.id,
-        :message_sid => twilio_params[:MessageSid],
         :body        => twilio_params[:Body],
-        :status      => twilio_params[:SmsStatus],
         :direction   => 'inbound'
       })
+
+      # Create the activity
+      @activity = @employee.activity.create({
+        :employee_id   => @employee.id,
+        :message_id    => @message.id,
+        # :question_id   => @question.id,
+        :message_sid   => twilio_params[:MessageSid],
+        :sms_status    => twilio_params[:SmsStatus]
+        })
 
     end
 
@@ -46,10 +52,10 @@ class V1::TwilioController < ApplicationController
   def update
 
     # Find the message by SID
-    @message = V1::Message.find_by message_sid: twilio_params[:MessageSid]
+    @message = V1::Activity.find_by message_sid: twilio_params[:MessageSid]
 
     # Update the status
-    @message.update( status: twilio_params[:SmsStatus] )
+    @message.update( sms_status: twilio_params[:SmsStatus] )
 
     render status: :ok
   end
