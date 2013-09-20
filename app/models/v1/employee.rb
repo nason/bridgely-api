@@ -12,8 +12,9 @@ class V1::Employee < ActiveRecord::Base
   # Associations
   belongs_to :company, class_name: "V1::Admin::Company"
 
-  has_and_belongs_to_many :messages
-  has_and_belongs_to_many :questions, join_table: :v1_employees_messages
+  has_many :activities
+  has_many :messages, through: :activities
+  has_many :questions, through: :activities
 
   # Serialization
   serialize :data, Hash

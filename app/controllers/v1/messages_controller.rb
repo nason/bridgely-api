@@ -2,9 +2,9 @@
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
 # TODO: Utilize the employee_message table in the Message, Question and Twilio controllers
-# TODO: employee_id param should be employee_ids => an array of employees to be
-#        sent the message, or the string 'all' to send to whole company
-# TODO: Update send_sms_message to send a message for each id in the employee_ids array
+TODO: employee_id param should be employee_ids => an array of employees to be
+       sent the message, or the string 'all' to send to whole company
+TODO: Update send_sms_message to send a message for each id in the employee_ids array
 # TODO: Dont take question_id param, question controller will create question record and message record
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
 # TODO: Consider concentrating Twillio integration methods into employee_message model
@@ -34,7 +34,7 @@ class V1::MessagesController < ApplicationController
   # POST /v1/messages
   # Send an OUTGOING SMS message
   def create
-    @v1_message = V1::Message.new(message_params)
+    @v1_message = V1::Message.new( message_params.except(:employee_ids) )
 
     if @v1_message.save
       @v1_message.update :message_sid => send_sms_message, :status => 'sent'
@@ -67,7 +67,7 @@ class V1::MessagesController < ApplicationController
 
   private
   def message_params
-    params.require(:message).permit(:company_id, :employee_id, :question_id, :body, :data, :direction, :status)
+    params.require(:message).permit(:company_id, :employee_ids, :question_id, :body, :data, :direction, :status)
   end
 
   def send_sms_message

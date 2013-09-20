@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920031815) do
+ActiveRecord::Schema.define(version: 20130920185118) do
+
+  create_table "v1_activities", force: true do |t|
+    t.integer "employee_id"
+    t.integer "message_id"
+    t.integer "question_id"
+    t.string  "message_sid", default: "pending", null: false
+    t.string  "sms_status",  default: "pending", null: false
+  end
+
+  add_index "v1_activities", ["employee_id"], name: "index_v1_activities_on_employee_id"
+  add_index "v1_activities", ["message_id"], name: "index_v1_activities_on_message_id"
+  add_index "v1_activities", ["message_sid"], name: "index_v1_activities_on_message_sid"
+  add_index "v1_activities", ["question_id"], name: "index_v1_activities_on_question_id"
 
   create_table "v1_admin_companies", force: true do |t|
     t.string   "name",                    null: false

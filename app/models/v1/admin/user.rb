@@ -13,6 +13,7 @@ class V1::Admin::User < ActiveRecord::Base
   validates :email, :presence => true
   validates :email, :uniqueness => true
   validates :name, :presence => true
+  # validates :company_id, :presence => true
   validates :encrypted_password, :presence => true
 
   #Associations

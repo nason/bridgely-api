@@ -11,11 +11,9 @@ class V1::Admin::Company < ActiveRecord::Base
 
   # Associations
   has_many :users
-
   has_many :employees
-
   has_many :messages
-  has_many :questions, through: :message
+  has_many :questions, through: :messages
 
   # Serialize settings
   serialize :settings, Hash
