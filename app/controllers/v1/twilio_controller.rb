@@ -18,9 +18,7 @@ class V1::TwilioController < ApplicationController
       @employee = V1::Employee.find_or_initialize_by phone: twilio_params[:From], company_id: @company.id
 
       # Create the employee if record does not exist
-      @employee = V1::Employee.update({
-        :name        => twilio_params[:Body],
-      }) unless @employee.persisted?
+      @employee.update( :name => twilio_params[:Body] ) unless @employee.persisted?
 
       # TODO: Else add the response as a tag or a label, find last question sent to employee and associate it
 
