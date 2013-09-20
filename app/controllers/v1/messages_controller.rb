@@ -8,7 +8,8 @@
 # TODO: Update send_sms_message to send a message for each id in the employee_ids array
 # TODO: Dont take question_id param, question controller will create question record and message record
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
-# TODO: Consider concentrating Twillio integration into employee_message model
+# TODO: Consider concentrating Twillio integration methods into employee_message model
+# TODO: Update twilio message controller to utilize updated schema
 
 class V1::MessagesController < ApplicationController
   before_filter :require_token
