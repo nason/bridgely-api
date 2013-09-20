@@ -76,11 +76,9 @@ ActiveRecord::Schema.define(version: 20130920031815) do
     t.string   "direction",   default: "outbound", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "message_sid"
   end
 
   add_index "v1_messages", ["company_id"], name: "index_v1_messages_on_company_id"
-  add_index "v1_messages", ["message_sid"], name: "index_v1_messages_on_message_sid"
   add_index "v1_messages", ["question_id"], name: "index_v1_messages_on_question_id"
 
   create_table "v1_questions", force: true do |t|
