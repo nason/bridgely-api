@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130919171224) do
+ActiveRecord::Schema.define(version: 20130920021309) do
 
   create_table "v1_admin_companies", force: true do |t|
     t.string   "name",                    null: false
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20130919171224) do
   add_index "v1_employees", ["company_id"], name: "index_v1_employees_on_company_id"
   add_index "v1_employees", ["name"], name: "index_v1_employees_on_name"
   add_index "v1_employees", ["phone"], name: "index_v1_employees_on_phone"
+
+  create_table "v1_employees_v1_messages", id: false, force: true do |t|
+    t.integer "v1_employee_id"
+    t.integer "v1_message_id"
+    t.integer "v1_question_id"
+  end
+
+  add_index "v1_employees_v1_messages", ["v1_employee_id"], name: "index_v1_employees_v1_messages_on_v1_employee_id"
+  add_index "v1_employees_v1_messages", ["v1_message_id"], name: "index_v1_employees_v1_messages_on_v1_message_id"
+  add_index "v1_employees_v1_messages", ["v1_question_id"], name: "index_v1_employees_v1_messages_on_v1_question_id"
 
   create_table "v1_messages", force: true do |t|
     t.integer  "company_id",                      null: false
