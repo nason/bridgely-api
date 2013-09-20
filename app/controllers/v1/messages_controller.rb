@@ -10,6 +10,7 @@
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
 # TODO: Consider concentrating Twillio integration methods into employee_message model
 # TODO: Update twilio message controller to utilize updated schema
+# TODO: Auto-response after initial message from an employee
 
 class V1::MessagesController < ApplicationController
   before_filter :require_token
