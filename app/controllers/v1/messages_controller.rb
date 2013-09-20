@@ -81,19 +81,16 @@ class V1::MessagesController < ApplicationController
     @company = @v1_message.company
     @account = @twilio_client.accounts.get(@company.account_sid)
     @account_number = @company.settings[:account_phone_number]
-    @body = @v1_message.body
-
 
     @recipients = V1::Employee.find( @v1_message.employee_ids )
+
+    # TODO: Verify employees belong to company here
 
     @recipients.each do |recipient|
       @sms = @account.messages.create({
         :from => @account_number,
         :to => recipient.phone,
-        :body => @body
-        # Above is for an incoming message
-        # Interpolation can create cool replies =>
-        # :body => "Responding from #{@account_number} to #{@recipient.name}, employee of #{@company.name}!"
+        :body => @v1_message.body
       })
 
       @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
