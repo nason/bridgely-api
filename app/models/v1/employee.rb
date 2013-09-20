@@ -10,9 +10,9 @@ class V1::Employee < ActiveRecord::Base
   validates :phone, :presence => true, :uniqueness => true
 
   # Associations
-  belongs_to :company
-  has_many :messages, through: :company
-  has_many :questions, through: :messages
+  belongs_to :company, class_name: "V1::Admin::Company"
+  has_many :messages, class_name: "V1::Message", through: :company
+#  has_many :questions, class_name: "V1::Question", through: :messages
 
   serialize :data, Hash
 

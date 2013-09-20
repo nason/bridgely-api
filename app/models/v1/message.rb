@@ -6,7 +6,7 @@ class V1::Message < ActiveRecord::Base
   validates :employee_id, :presence => true
   validates :body, :presence => true
 
-  belongs_to :company
-  belongs_to :employee
+  # belongs_to :company
+  # belongs_to :employee
 
 end

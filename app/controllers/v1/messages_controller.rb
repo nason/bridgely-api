@@ -1,7 +1,6 @@
 # TODO: Setup serializer
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
-# TODO: Utilize the employee_message table in the Message, Question and Twilio models
 # TODO: Utilize the employee_message table in the Message, Question and Twilio controllers
 # TODO: employee_id param should be employee_ids => an array of employees to be
 #        sent the message, or the string 'all' to send to whole company
