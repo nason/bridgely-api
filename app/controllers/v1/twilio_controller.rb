@@ -21,6 +21,7 @@ class V1::TwilioController < ApplicationController
       unless @employee.persisted?
         @employee.update( :name => twilio_params[:Body] )
         @employee.save
+        # TODO: Send default auto response here!!
       end
 
       # TODO: Else add the response as a tag or a label, find last question sent to employee and associate it

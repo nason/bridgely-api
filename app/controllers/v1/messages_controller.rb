@@ -4,8 +4,6 @@
 # TODO: Setup serializer
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
-# TODO: Dont take question_id param, question controller will create question record and message record
-# TODO: Determine the relationship path to tag an incoming message as a response to a question
 # TODO: Consider concentrating Twillio integration methods into employee_message model
 # TODO: Update twilio message controller to utilize updated schema
 # TODO: Auto-response after initial message from an employee
@@ -35,9 +33,15 @@ class V1::MessagesController < ApplicationController
   def create
     @v1_message = V1::Message.new( message_params.except(:employee_ids) )
 
-    # TODO: if :employee_ids === 'all' do something else, send to all the companys employees
-    # :employees_ids is a string list of ids, convert it into an array
-    @v1_message.employee_ids = message_params[:employee_ids].split(",").map { |s| s.to_i }
+    if @message_params[:employee_ids] === 'all'
+
+      # If :employee_ids param is 'all', send to the whole company's mobile directory
+      @v1_message.employee_ids = @v1_message.company.employee_ids
+    else
+
+      # :employees_ids is a string list of ids ('1,2,3'), convert it into an array
+      @v1_message.employee_ids = message_params[:employee_ids].split(",").map { |s| s.to_i }
+    end
 
     if @v1_message.save
       send_sms_messages
