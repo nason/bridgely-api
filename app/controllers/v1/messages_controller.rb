@@ -1,9 +1,8 @@
 # TODO: employee_id param should also accept the string 'all' to send to whole company
+# TODO: verify that employee actually belongs to company before sending
 
 # TODO: Setup serializer
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
-
-# TODO: Utilize the employee_message table in the Message, Question and Twilio controllers
 
 # TODO: Dont take question_id param, question controller will create question record and message record
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
@@ -36,11 +35,11 @@ class V1::MessagesController < ApplicationController
   def create
     @v1_message = V1::Message.new( message_params.except(:employee_ids) )
 
+    # TODO: if :employee_ids === 'all' do something else, send to all the companys employees
     # :employees_ids is a string list of ids, convert it into an array
     @v1_message.employee_ids = message_params[:employee_ids].split(",").map { |s| s.to_i }
 
     if @v1_message.save
-      # @v1_message.update :message_sid => send_sms_message, :status => 'sent'
       send_sms_messages
       render json: @v1_message, status: :created, location: @v1_message
     else
@@ -75,9 +74,6 @@ class V1::MessagesController < ApplicationController
   end
 
   def send_sms_messages
-    # TODO: if :employee_ids === 'all' do something else, send to all the companys employees
-    # TODO: verify that employee belongs to company before sending
-
     @company = @v1_message.company
     @account = @twilio_client.accounts.get(@company.account_sid)
     @account_number = @company.settings[:account_phone_number]
@@ -97,10 +93,7 @@ class V1::MessagesController < ApplicationController
       })
 
       @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
-      @activity.update(
-        message_sid: @sms.sid,
-        sms_status: @sms.status
-      )
+      @activity.update( message_sid: @sms.sid, sms_status: @sms.status )
     end
   end
 
