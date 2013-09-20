@@ -1,4 +1,3 @@
-require 'pry'
 class ApplicationController < ActionController::API
 
   # These are required to get rails-api to work correctly with strong parameters
