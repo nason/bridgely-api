@@ -18,25 +18,26 @@ class V1::TwilioController < ApplicationController
       @employee = V1::Employee.find_or_initialize_by phone: twilio_params[:From], company_id: @company.id
 
       # Create the employee if record does not exist
-      @employee.update( :name => twilio_params[:Body] ) unless @employee.persisted?
+      unless @employee.persisted?
+        @employee.update( :name => twilio_params[:Body] )
+        @employee.save
+      end
 
       # TODO: Else add the response as a tag or a label, find last question sent to employee and associate it
 
-      # Create the message
-      @message = @employee.messages.create({
-        :company_id  => @company.id,
-        :body        => twilio_params[:Body],
-        :direction   => 'inbound'
-      })
+      @activity = @employee.activities.build(
+        :employee_id => @employee.id,
+        :message_sid => twilio_params[:MessageSid],
+        :sms_status  => twilio_params[:SmsStatus]
+      )
+      @message = @activity.create_message!(
+        :company_id => @company.id,
+        :body       => twilio_params[:Body],
+        :direction  => 'inbound'
+      )
+      @activity.message_id = @message.id
+      @activity.save
 
-      # Create the activity
-      @activity = @employee.activity.create({
-        :employee_id   => @employee.id,
-        :message_id    => @message.id,
-        # :question_id   => @question.id,
-        :message_sid   => twilio_params[:MessageSid],
-        :sms_status    => twilio_params[:SmsStatus]
-        })
 
     end
 
