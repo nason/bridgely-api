@@ -57,31 +57,29 @@ ActiveRecord::Schema.define(version: 20130920031815) do
   add_index "v1_employees", ["name"], name: "index_v1_employees_on_name"
   add_index "v1_employees", ["phone"], name: "index_v1_employees_on_phone"
 
-  create_table "v1_employees_v1_messages", id: false, force: true do |t|
-    t.integer "v1_employee_id"
-    t.integer "v1_message_id"
-    t.integer "v1_question_id"
-    t.string  "message_sid",    default: "pending", null: false
+  create_table "v1_employees_messages", id: false, force: true do |t|
+    t.integer "employee_id"
+    t.integer "message_id"
+    t.integer "question_id"
+    t.string  "message_sid", default: "pending", null: false
+    t.string  "sms_status",  default: "pending", null: false
   end
 
-  add_index "v1_employees_v1_messages", ["v1_employee_id"], name: "index_v1_employees_v1_messages_on_v1_employee_id"
-  add_index "v1_employees_v1_messages", ["v1_message_id"], name: "index_v1_employees_v1_messages_on_v1_message_id"
-  add_index "v1_employees_v1_messages", ["v1_question_id"], name: "index_v1_employees_v1_messages_on_v1_question_id"
+  add_index "v1_employees_messages", ["employee_id"], name: "index_v1_employees_messages_on_employee_id"
+  add_index "v1_employees_messages", ["message_id"], name: "index_v1_employees_messages_on_message_id"
+  add_index "v1_employees_messages", ["question_id"], name: "index_v1_employees_messages_on_question_id"
 
   create_table "v1_messages", force: true do |t|
     t.integer  "company_id",                       null: false
-    t.integer  "employee_id",                      null: false
     t.integer  "question_id"
     t.string   "body",                             null: false
     t.string   "direction",   default: "outbound", null: false
-    t.string   "status",      default: "pending",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "message_sid"
   end
 
   add_index "v1_messages", ["company_id"], name: "index_v1_messages_on_company_id"
-  add_index "v1_messages", ["employee_id"], name: "index_v1_messages_on_employee_id"
   add_index "v1_messages", ["message_sid"], name: "index_v1_messages_on_message_sid"
   add_index "v1_messages", ["question_id"], name: "index_v1_messages_on_question_id"
 
