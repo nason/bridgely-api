@@ -1,4 +1,14 @@
 # TODO: Setup serializer
+# TODO: Dont take company_id as a param unless admin, determine it from the logged in user
+
+# TODO: Create employee_message JOIN table with employee, message, and question foreign keys
+# TODO: Utilize the employee_message table in the Message, Question and Twilio controllers
+# TODO: employee_id param should be employee_ids => an array of employees to be
+#        sent the message, or the string 'all' to send to whole company
+# TODO: Update send_sms_message to send a message for each id in the employee_ids array
+# TODO: Dont take question_id param, question controller will create question record and message record
+# TODO: Determine the relationship path to tag an incoming message as a response to a question
+# TODO: Consider concentrating Twillio integration into employee_message model
 
 class V1::MessagesController < ApplicationController
   before_filter :require_token
