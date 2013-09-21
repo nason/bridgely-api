@@ -1,3 +1,6 @@
+# TODO: Dont take question_id param, question controller will create question record and message record
+# TODO: Determine the relationship path to tag an incoming message as a response to a question
+
 class V1::QuestionsController < ApplicationController
   before_filter :require_token
 
@@ -5,7 +8,7 @@ class V1::QuestionsController < ApplicationController
   # TODO: Setup serializer
 
   # GET /v1/questions
-  # GET /v1/questions.json
+  # Return all questions
   def index
     @v1_questions = V1::Question.all
 
@@ -13,7 +16,7 @@ class V1::QuestionsController < ApplicationController
   end
 
   # GET /v1/questions/1
-  # GET /v1/questions/1.json
+  # Find and return a single question by id
   def show
     @v1_question = V1::Question.find(params[:id])
 
@@ -21,7 +24,7 @@ class V1::QuestionsController < ApplicationController
   end
 
   # POST /v1/questions
-  # POST /v1/questions.json
+  # Send an outgoing SMS message that is a question
   def create
     @v1_question = V1::Question.new(question_params)
 
@@ -33,7 +36,7 @@ class V1::QuestionsController < ApplicationController
   end
 
   # PATCH/PUT /v1/questions/1
-  # PATCH/PUT /v1/questions/1.json
+  # Update an existing question record
   def update
     @v1_question = V1::Question.find(params[:id])
 
@@ -45,7 +48,7 @@ class V1::QuestionsController < ApplicationController
   end
 
   # DELETE /v1/questions/1
-  # DELETE /v1/questions/1.json
+  # Delete a question record
   def destroy
     @v1_question = V1::Question.find(params[:id])
     @v1_question.destroy
@@ -55,6 +58,6 @@ class V1::QuestionsController < ApplicationController
 
   private
   def message_params
-    params.require(:question).permit(:company_id, :question, :response_tag)
+    params.require(:question).permit(:question, :response_tag)
   end
 end
