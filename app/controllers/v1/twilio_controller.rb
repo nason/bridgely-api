@@ -92,6 +92,10 @@ class V1::TwilioController < ApplicationController
       # Make sure the record and message get the question_id
       @record.question_id = @last_employee_question.id
       @record.message.question_id = @last_employee_question.id
+
+      puts "tagging #{@employee.name} question: #{@record.question_id}, message: #{@record.message.id}"
+      puts "data hash: #{@employee[:data]}"
+      puts "alt #{@employee.data}"
     end
   end
 
