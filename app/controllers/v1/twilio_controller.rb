@@ -27,6 +27,7 @@ class V1::TwilioController < ApplicationController
 
       if @employee
         @record.employee_id = @employee.id
+        process_question_response
         @record.save
       else
         @employee = @record.build_employee(
@@ -37,6 +38,7 @@ class V1::TwilioController < ApplicationController
       end
 
       if @employee.persisted?
+        @employee.save if @employee.changed?
         render :json=> {:success => true}, status: :ok
       else
         @record.save
@@ -63,6 +65,34 @@ class V1::TwilioController < ApplicationController
   private
   def twilio_params
     params.permit( :AccountSid, :MessageSid, :Body, :To, :SmsStatus, :From )
+  end
+
+  def process_question_response
+    @last_employee_question_activity = V1::Activity.where( "employee_id = ? AND question_id NOT NULL", @employee.id ).last
+    if @last_employee_question_activity.nil?
+      # Tag the message as unrelatable to a question?
+    else
+      @last_employee_question = @last_employee_question_activity.question
+      if @last_employee_question.response_tag?
+
+        # first make sure tags hash exists
+        @employee[:data][:tags] = {} unless @employee[:data][:tags]
+
+        # then save message response as a tag
+        @employee[:data][:tags][ @last_employee_question.response_tag ] = @record.message.body
+      else
+
+        # first make sure labels exists, otherwise make it an empty array
+        @employee[:data][:labels] = [] unless @employee[:data][:labels]
+
+        # then save it into the labels array
+        @employee[:data][:labels].push ( @record.message.body )
+      end
+
+      # Make sure the record and message get the question_id
+      @record.question_id = @last_employee_question.id
+      @record.message.question_id = @last_employee_question.id
+    end
   end
 
   def twiml_response
