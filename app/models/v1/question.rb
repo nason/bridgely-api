@@ -6,4 +6,6 @@ class V1::Question < ActiveRecord::Base
   has_many :messages, through: :activities
   has_one :company, through: :activity
 
+  #accepts_nested_attributes_for :message
+
 end
