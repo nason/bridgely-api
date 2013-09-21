@@ -1,5 +1,5 @@
 # TODO: If incoming message corresponds to a message record with a question id, store response as a tag
-# TODO: Make sure Twilio requests pass validation for main and subaccounts => Need to store subaccount auth key on company
+# TODO: Make sure Twilio requests pass validation for subaccounts => Need to store subaccount auth key on company record => @subaccount.auth_token
 
 class V1::TwilioController < ApplicationController
   # before_filter :validate_twilio_header
