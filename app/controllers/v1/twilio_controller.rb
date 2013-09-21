@@ -28,7 +28,6 @@ class V1::TwilioController < ApplicationController
       if @employee
         @record.employee_id = @employee.id
         process_question_response
-        @record.save
       else
         @employee = @record.build_employee(
           :phone      => twilio_params[:From],
@@ -38,7 +37,9 @@ class V1::TwilioController < ApplicationController
       end
 
       if @employee.persisted?
-        @employee.save if @employee.changed?
+        @record.save
+        @record.message.save
+        @employee.save #save changes to the employee data attribute
         render :json=> {:success => true}, status: :ok
       else
         @record.save
@@ -93,9 +94,9 @@ class V1::TwilioController < ApplicationController
       @record.question_id = @last_employee_question.id
       @record.message.question_id = @last_employee_question.id
 
-      puts "tagging #{@employee.name} question: #{@record.question_id}, message: #{@record.message.id}"
-      puts "data hash: #{@employee[:data]}"
-      puts "alt #{@employee.data}"
+      # puts "tagging #{@employee.name} question: #{@record.question_id}, message: #{@record.message.id}"
+      # puts "data hash: #{@employee[:data]}"
+      # puts "alt #{@employee.data}"
     end
   end
 

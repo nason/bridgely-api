@@ -15,7 +15,7 @@ forus = V1::Admin::Company.create(
   settings: { account_phone_number: '+15106069589' }
 )
 
-forus_employee = V1::Employee.create( {name: 'Michael Nason', phone: '+18179929364', company_id: forus.id } )
+# forus_employee = V1::Employee.create( {name: 'Michael Nason', phone: '+18179929364', company_id: forus.id } )
 
 hr = V1::Admin::Company.create(
   name: 'HackReactor',
