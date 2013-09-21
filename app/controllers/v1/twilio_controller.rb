@@ -27,6 +27,7 @@ class V1::TwilioController < ApplicationController
 
       if @employee
         @record.employee_id = @employee.id
+        @record.save
       else
         @employee = @record.build_employee(
           :phone      => twilio_params[:From],
@@ -38,9 +39,9 @@ class V1::TwilioController < ApplicationController
       if @employee.persisted?
         render :json=> {:success => true}, status: :ok
       else
+        @record.save
         render :xml=> twiml_response, status: :ok
       end
-      @record.save
 
     end
 
@@ -67,10 +68,25 @@ class V1::TwilioController < ApplicationController
 
   def twiml_response
 
-    # TODO: Create the approriate activity and message records, MessageSID will be unknown but thats ok.
+    #Create the approriate activity and message records, MessageSID will be unknown but thats ok.
+
+    #TODO: Pull the autoresponder from @company.settings[:autoresponder]
+    autoresponder = "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
+    response = V1::Activity.new(
+      :employee_id => @employee.id,
+      :message_sid => 'autoresponder',
+      :sms_status => 'sent'
+    )
+    message = response.create_message(
+      :company_id => @company.id,
+      :body => autoresponder,
+      :direction => 'outbound'
+    )
+    response.save
+
     twiml = Twilio::TwiML::Response.new do |r|
       r.Message do |message|
-        message.Body "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
+        message.Body autoresponder
       end
     end
     twiml.text
