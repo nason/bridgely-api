@@ -3,6 +3,7 @@ class V1::Question < ActiveRecord::Base
 
   has_many :activities
   has_many :employees, through: :activities
-  has_one :message, through: :activities
-  has_one :company, through: :activities
+  has_many :messages, through: :activities
+  has_one :company, through: :activity
+
 end
