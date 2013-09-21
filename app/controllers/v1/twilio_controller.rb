@@ -6,7 +6,7 @@ class V1::TwilioController < ApplicationController
 
   # POST /v1/twilio/inbound
   # Request:  Twilio POSTS incoming text message data to this path
-  # Response: Twilio retrieves and executes TwiML returned
+  # Response: Twilio retrieves and (if new employee returns TwiML autoresponder)
   def create
     @company = V1::Admin::Company.find_by account_sid: twilio_params[:AccountSid]
 
@@ -42,7 +42,6 @@ class V1::TwilioController < ApplicationController
         @record.save
         render :xml=> twiml_response, status: :ok
       end
-
     end
 
   end
@@ -69,7 +68,6 @@ class V1::TwilioController < ApplicationController
   def twiml_response
 
     #Create the approriate activity and message records, MessageSID will be unknown but thats ok.
-
     #TODO: Pull the autoresponder from @company.settings[:autoresponder]
     autoresponder = "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
     response = V1::Activity.new(
@@ -84,6 +82,7 @@ class V1::TwilioController < ApplicationController
     )
     response.save
 
+    # Return autoresponder in TwiML
     twiml = Twilio::TwiML::Response.new do |r|
       r.Message do |message|
         message.Body autoresponder
