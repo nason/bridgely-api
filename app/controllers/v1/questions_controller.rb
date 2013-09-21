@@ -1,4 +1,3 @@
-# TODO: Determine the relationship path to tag an incoming message as a response to a question
 # TODO: Setup serializer
 
 class V1::QuestionsController < ApplicationController
