@@ -8,42 +8,42 @@ class V1::TwilioController < ApplicationController
   # Request:  Twilio POSTS incoming text message data to this path
   # Response: Twilio retrieves and executes TwiML returned
   def create
-
-    # Find the company associated with the AccountSid
     @company = V1::Admin::Company.find_by account_sid: twilio_params[:AccountSid]
 
     if @company
 
-      # Find the employee associated with the company_id and phone number
-      @employee = V1::Employee.find_or_initialize_by phone: twilio_params[:From], company_id: @company.id
-
-      # Create the employee if record does not exist
-      unless @employee.persisted?
-        @employee.update( :name => twilio_params[:Body] )
-        @employee.save
-        # TODO: Send default auto response here!!
-      end
-
-      # TODO: Else add the response as a tag or a label, find last question sent to employee and associate it
-
-      @activity = @employee.activities.build(
-        :employee_id => @employee.id,
+      @record = V1::Activity.new(
         :message_sid => twilio_params[:MessageSid],
         :sms_status  => twilio_params[:SmsStatus]
       )
-      @message = @activity.create_message!(
+
+      @record.create_message(
         :company_id => @company.id,
         :body       => twilio_params[:Body],
         :direction  => 'inbound'
       )
-      @activity.message_id = @message.id
-      @activity.save
 
+      @employee = V1::Employee.find_by "company_id = ? AND phone = ?", @company.id, twilio_params[:From]
+
+      if @employee
+        @record.employee_id = @employee.id
+      else
+        @employee = @record.build_employee(
+          :phone      => twilio_params[:From],
+          :name       => twilio_params[:Body],
+          :company_id => @company.id
+        )
+      end
+
+      if @employee.persisted?
+        render :json=> {:success => true}, status: :ok
+      else
+        render :xml=> twiml_response, status: :ok
+      end
+      @record.save
 
     end
 
-    # And then send a response? TwilML can go here, or we can create a new outbound message...
-    render :json=> {:success=>true}, status: :ok
   end
 
   # POST /v1/twilio/status
@@ -63,6 +63,17 @@ class V1::TwilioController < ApplicationController
   private
   def twilio_params
     params.permit( :AccountSid, :MessageSid, :Body, :To, :SmsStatus, :From )
+  end
+
+  def twiml_response
+
+    # TODO: Create the approriate activity and message records, MessageSID will be unknown but thats ok.
+    twiml = Twilio::TwiML::Response.new do |r|
+      r.Message do |message|
+        message.Body "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
+      end
+    end
+    twiml.text
   end
 
   # def validate_twilio_header
