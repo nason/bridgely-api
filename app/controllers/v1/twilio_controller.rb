@@ -1,5 +1,7 @@
-# TODO: If incoming message corresponds to a message record with a question id, store response as a tag
 # TODO: Make sure Twilio requests pass validation for subaccounts => Need to store subaccount auth key on company record => @subaccount.auth_token
+
+# TODO: Prevent followups after response and before another question from overwriting responses => store them in an :unprocessable array inside data?
+#       Right now, labels keep getting added to labels, and values get overridden in tags
 
 class V1::TwilioController < ApplicationController
   # before_filter :validate_twilio_header
