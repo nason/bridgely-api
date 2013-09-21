@@ -9,6 +9,7 @@ class V1::Message < ActiveRecord::Base
 
   has_many :activities
   has_many :employees, through: :activities
-  has_one :question, through: :activities
+
+  has_one :question
 
 end

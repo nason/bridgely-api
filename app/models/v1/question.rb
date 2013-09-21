@@ -1,11 +1,13 @@
 class V1::Question < ActiveRecord::Base
-  validates :question, :presence => true
+  validates :title, :presence => true
+  # validates :message_id, :presence => true, :uniqueness => true
 
   has_many :activities
   has_many :employees, through: :activities
-  has_many :messages, through: :activities
-  has_one :company, through: :activity
 
-  #accepts_nested_attributes_for :message
+  has_one :message
+  has_one :company, through: :message
+
+  accepts_nested_attributes_for :message
 
 end
