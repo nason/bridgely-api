@@ -68,7 +68,7 @@ class V1::TwilioController < ApplicationController
   end
 
   def process_question_response
-    @last_employee_question_activity = V1::Activity.where( "employee_id = ? AND question_id NOT NULL", @employee.id ).last
+    @last_employee_question_activity = V1::Activity.where( "employee_id = ? AND question_id IS NOT NULL", @employee.id ).last
     if @last_employee_question_activity.nil?
       # TODO: tag the message as unrelatable to a question?
     else
