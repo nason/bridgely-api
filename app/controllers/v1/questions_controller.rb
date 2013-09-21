@@ -1,11 +1,9 @@
-# TODO: Dont take question_id param, question controller will create question record and message record
 # TODO: Determine the relationship path to tag an incoming message as a response to a question
+# TODO: Setup serializer
 
 class V1::QuestionsController < ApplicationController
   before_filter :require_token
-
-  # TODO: Strip out unnecessary params
-  # TODO: Setup serializer
+  before_filter :create_twilio_client, only: [:create]
 
   # GET /v1/questions
   # Return all questions
@@ -26,9 +24,24 @@ class V1::QuestionsController < ApplicationController
   # POST /v1/questions
   # Send an outgoing SMS message that is a question
   def create
-    @v1_question = V1::Question.new(question_params)
+
+    @v1_question = V1::Question.new(question_params.except(:message))
+    @v1_message = @v1_question.build_message question_params[:message].except(:employee_ids)
+
+    if question_params[:message][:employee_ids] === 'all'
+
+      # If :employee_ids param is 'all', send to the whole company's mobile directory
+      @v1_message.employee_ids = @v1_message.company.employee_ids
+    else
+
+      # :employees_ids is a string list of ids ('1,2,3'), convert it into an array
+      @v1_message.employee_ids = question_params[:message][:employee_ids].split(",").map { |s| s.to_i }
+    end
+    @v1_message.save
+    @v1_question.message_id = @v1_message.id
 
     if @v1_question.save
+      send_sms_messages
       render json: @v1_question, status: :created, location: @v1_question
     else
       render json: @v1_question.errors, status: :unprocessable_entity
@@ -57,7 +70,7 @@ class V1::QuestionsController < ApplicationController
   end
 
   private
-  def message_params
-    params.require(:question).permit(:question, :response_tag)
+  def question_params
+    params.require(:question).permit( :title, :response_tag, :message => [:company_id, :body, :employee_ids] )
   end
 end

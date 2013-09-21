@@ -2,8 +2,6 @@
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
 # TODO: Consider concentrating Twillio integration methods into employee_message model
-# TODO: Update twilio message controller to utilize updated schema
-# TODO: Auto-response after initial message from an employee
 
 class V1::MessagesController < ApplicationController
   before_filter :require_token
@@ -72,31 +70,6 @@ class V1::MessagesController < ApplicationController
   private
   def message_params
     params.require(:message).permit(:company_id, :employee_ids, :question_id, :body)
-  end
-
-  def send_sms_messages
-    @company = @v1_message.company
-    @account = @twilio_client.accounts.get(@company.account_sid)
-    @account_number = @company.settings[:account_phone_number]
-
-    @recipients = V1::Employee.find( @v1_message.employee_ids )
-
-    @recipients.each do |recipient|
-      if recipient.company_id === @company.id
-        @sms = @account.messages.create({
-          :from => @account_number,
-          :to => recipient.phone,
-          :body => @v1_message.body
-        })
-
-        @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
-        @activity.update( message_sid: @sms.sid, sms_status: @sms.status )
-      else
-        # TODO: Optimize this into one query instead of checking each recipient
-        # TODO: Throw the error, prevent message record from being created at all
-        puts "Error: Trying to send message to an employee of another company"
-      end
-    end
   end
 
 end
