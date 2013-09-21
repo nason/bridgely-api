@@ -92,8 +92,8 @@ class V1::MessagesController < ApplicationController
         @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
         @activity.update( message_sid: @sms.sid, sms_status: @sms.status )
       else
-
-        #TODO: Throw the error, prevent message record from being created at all
+        # TODO: Optimize this into one query instead of checking each recipient
+        # TODO: Throw the error, prevent message record from being created at all
         puts "Error: Trying to send message to an employee of another company"
       end
     end
