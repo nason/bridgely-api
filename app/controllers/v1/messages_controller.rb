@@ -1,6 +1,3 @@
-# TODO: employee_id param should also accept the string 'all' to send to whole company
-# TODO: verify that employee actually belongs to company before sending
-
 # TODO: Setup serializer
 # TODO: Dont take company_id as a param unless admin, determine it from the logged in user
 
@@ -84,17 +81,21 @@ class V1::MessagesController < ApplicationController
 
     @recipients = V1::Employee.find( @v1_message.employee_ids )
 
-    # TODO: Verify employees belong to company here
-
     @recipients.each do |recipient|
-      @sms = @account.messages.create({
-        :from => @account_number,
-        :to => recipient.phone,
-        :body => @v1_message.body
-      })
+      if recipient.company_id === @company.id
+        @sms = @account.messages.create({
+          :from => @account_number,
+          :to => recipient.phone,
+          :body => @v1_message.body
+        })
 
-      @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
-      @activity.update( message_sid: @sms.sid, sms_status: @sms.status )
+        @activity = V1::Activity.find_or_create_by :message_id => @v1_message.id, :employee_id => recipient.id
+        @activity.update( message_sid: @sms.sid, sms_status: @sms.status )
+      else
+
+        #TODO: Throw the error, prevent message record from being created at all
+        puts "Error: Trying to send message to an employee of another company"
+      end
     end
   end
 
