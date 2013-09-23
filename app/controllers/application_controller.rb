@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Expose-Headers'] = 'ETag'
     headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(",")
+    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type Authorization X-Requested-With X-CSRF-Token}.join(",")
     head(:ok) if request.request_method == "OPTIONS"
 
     # headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
