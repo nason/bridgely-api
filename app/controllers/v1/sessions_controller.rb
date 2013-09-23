@@ -14,7 +14,8 @@ class V1::SessionsController < ApplicationController
 
     if resource.valid_password?(session_params[:password])
       sign_in(:v1_admin_user, resource)
-      render :json=> {:success=>true, :auth_token=>resource.authorization_token, :account => current_v1_admin_user }, status: :ok
+      render json: resource
+      # render :json=> {:success=>true, :auth_token=>resource.authorization_token, :account => resource }, status: :ok
       # TODO: Create a serializer for the account data in this response
     else
       invalid_login_attempt
