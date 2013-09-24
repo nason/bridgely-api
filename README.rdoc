@@ -1,28 +1,32 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a work in progress!
 
-Things you may want to cover:
+Environment variables must be configured for Bridgely-API to communicate with Twilio:
+
+1. Create a new application.yml file in the config folder - 'touch config/application.yml'
+
+2. Add application configuration variables here, as shown below:
+* TWILIO_SID: "{ your twilio account sid }"
+* TWILIO_AUTH_TOKEN: "{ your twilio account authentication token }"
+* Note: you can group these in test, development, and production if you need
 
 * Ruby version
-
-* System dependencies
+4.0.0
 
 * Configuration
+<tt>bundle install</tt>
 
 * Database creation
+<tt>rake db:migrate</tt>
+-or-
+<tt>rake db:schema:load</tt>
 
 * Database initialization
-
-* How to run the test suite
+<tt>rake db:seed</tt>
 
 * Services (job queues, cache servers, search engines, etc.)
+Coming soon
 
 * Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+<tt>rake figaro:heroku</tt> to push environment variables to Heroku
