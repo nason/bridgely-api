@@ -53,7 +53,6 @@ class V1::TwilioController < ApplicationController
 
   # POST /v1/twilio/status
   # Twilio makes this POST request when a API request to send an outgoing message has either succeeded or failed.
-
   def update
 
     # Find the message by SID
@@ -95,16 +94,12 @@ class V1::TwilioController < ApplicationController
       # Make sure the record and message get the question_id
       @record.question_id = @last_employee_question.id
       @record.message.question_id = @last_employee_question.id
-
-      # puts "tagging #{@employee.name} question: #{@record.question_id}, message: #{@record.message.id}"
-      # puts "data hash: #{@employee[:data]}"
-      # puts "alt #{@employee.data}"
     end
   end
 
   def twiml_response
 
-    #Create the approriate activity and message records, MessageSID will be unknown but thats ok.
+    #Create the approriate activity and message records, MessageSID will be unknown but that's ok.
     #TODO: Pull the autoresponder from @company.settings[:autoresponder]
     autoresponder = "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
     response = V1::Activity.new(
@@ -129,8 +124,8 @@ class V1::TwilioController < ApplicationController
   end
 
   # def validate_twilio_header
-  #   # First, instantiate a RequestValidator object with your account's AuthToken.
-  #   validator = Twilio::Util::RequestValidator.new( TWILIO_AUTH_TOKEN )
+  #   # First, instantiate a RequestValidator object with  SUBaccount's AuthToken.
+  #   validator = Twilio::Util::RequestValidator.new( @subaccount.TWILIO_AUTH_TOKEN )
 
   #   # Then gather the data required to validate the request
   #   uri = request.original_url
@@ -141,12 +136,7 @@ class V1::TwilioController < ApplicationController
   #   # Grab the signature from the HTTP header.
   #   signature = env['HTTP_X_TWILIO_SIGNATURE']
 
-  #   puts uri
-  #   puts params
-  #   puts signature
-
   #   # Finally, call the validator's #validate method.
-  #   head(422) unless validator.validate(uri, params, signature) #=> true if the request is from Twilio
+  #   head(422) unless validator.validate(uri, params, signature) #true if the request is from Twilio
   # end
-
 end

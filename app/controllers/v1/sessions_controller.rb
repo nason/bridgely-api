@@ -1,12 +1,6 @@
 class V1::SessionsController < ApplicationController
   before_filter :require_token, except: [:create]
 
-  # before_filter :authenticate_v1_admin_user!, except: [:create]
-
-  # respond_to :json
-
-  # before_filter :ensure_params_exist
-
   def create
     resource = V1::Admin::User.find_by_email( session_params[:email] )
 
@@ -15,8 +9,6 @@ class V1::SessionsController < ApplicationController
     if resource.valid_password?(session_params[:password])
       sign_in(:v1_admin_user, resource)
       render json: resource
-      # render :json=> {:success=>true, :auth_token=>resource.authorization_token, :account => resource }, status: :ok
-      # TODO: Create a serializer for the account data in this response
     else
       invalid_login_attempt
     end

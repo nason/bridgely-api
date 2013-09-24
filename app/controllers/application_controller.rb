@@ -4,15 +4,6 @@ class ApplicationController < ActionController::API
   include ActionController::ParamsWrapper
   include ActionController::StrongParameters
 
-  # CORS Headers
-  before_filter :cors
-
-  # Add CSRF protection
-  # include ActionController::RequestForgeryProtection
-
-  # enable CSRF protection on all controllers
-  # protect_from_forgery with: :reset_session
-
   # Setup token authentication
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
@@ -20,14 +11,17 @@ class ApplicationController < ActionController::API
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
 
+  # CORS Headers
+  before_filter :cors
+
   def cors
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Expose-Headers'] = 'ETag'
     headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
-    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type Authorization X-Requested-With X-CSRF-Token}.join(",")
+    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type Authorization X-Requested-With }.join(",")
     head(:ok) if request.request_method == "OPTIONS"
 
-    # headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
+    # headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match, X-CSRF-Token'
     # headers['Access-Control-Max-Age'] = '86400'
   end
 
