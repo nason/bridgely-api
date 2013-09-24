@@ -7,9 +7,8 @@ Environment variables must be configured for Bridgely-API to communicate with Tw
 1. Create a new application.yml file in the config folder - 'touch config/application.yml'
 
 2. Add application configuration variables here, as shown below:
-
-  * TWILIO_SID: "123abc"
-  * TWILIO_AUTH_TOKEN: "abc123"
+  <tt>TWILIO_SID: "123abc"</tt>
+  <tt>TWILIO_AUTH_TOKEN: "abc123"</tt>
   * Note: you can group these in test, development, and production if you need
 
 ### Ruby version
