@@ -10,7 +10,12 @@ class V1::MessagesController < ApplicationController
   # GET /v1/messages
   # Return all messages
   def index
-    @v1_messages = V1::Message.all
+
+    if @current_user.admin?
+      @v1_messages = V1::Message.all
+    else
+      @v1_messages = V1::Message.all.where(company_id: @current_user.company.id)
+    end
 
     render json: @v1_messages
   end

@@ -7,7 +7,12 @@ class V1::QuestionsController < ApplicationController
   # GET /v1/questions
   # Return all questions
   def index
-    @v1_questions = V1::Question.all
+
+    if @current_user.admin?
+      @v1_questions = V1::Question.all
+    else
+      @v1_questions = V1::Question.all.where(company: @current_user.company)
+    end
 
     render json: @v1_questions
   end
