@@ -11,9 +11,9 @@
 admin = V1::Admin::User.create( {name: 'Admin User', email: 'michael@nason.us', password: 'test_password' } )
 admin.update_attribute( :admin, true )
 
-user1 = V1::Admin::User.new( {name: 'ForUs User', email: 'forus@nason.us', password: 'test_password' } )
+user1 = V1::Admin::User.new( {name: 'David ForUs', email: 'forus@nason.us', password: 'test_password' } )
 user1.create_company({
-  name: 'David ForUs',
+  name: 'ForUs',
   account_sid: TWILIO_SID,
   settings:{
     autoresponder: 'Needs to be implemented',
@@ -22,9 +22,9 @@ user1.create_company({
 })
 user1.save
 
-user2 = V1::Admin::User.new( {name: 'HackReactor User', email: 'hr@nason.us', password: 'test_password' } )
+user2 = V1::Admin::User.new( {name: 'Michael Reactor', email: 'hr@nason.us', password: 'test_password' } )
 user2.create_company(
-  name: 'Michael Reactor',
+  name: 'Hack Reactor',
   account_sid: HR_SUB_SID,
   settings: {
     autoresponder: 'Needs to be implemented',
