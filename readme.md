@@ -2,6 +2,8 @@
 
 _This is a work in progress!_
 
+This is the backend API for [Bridgely](https://github.com/nason/bridgely/).
+
 Environment variables must be configured for Bridgely-API to communicate with Twilio:
 
 1. Create a new application.yml file in the config folder - 'touch config/application.yml'
@@ -12,10 +14,22 @@ Environment variables must be configured for Bridgely-API to communicate with Tw
   * Note: you can group these in test, development, and production if you need
 
 ### Ruby version
-4.0.0
+2.0.0
+
+### Dependencies
+- Rails 4
+- Rails-API
+- Active Model Serializers
+- Twilio-Ruby
+- Devise
+- BCrypt-Ruby
+- Figaro
+- PostgreSQL
 
 ### Configuration
 <tt>bundle install</tt>
+
+If the frontend is served from the public folder, disable CORS headers. Otherwise, leave them on and whitelist trusted origins
 
 ### Database creation
 <tt>rake db:migrate</tt>
