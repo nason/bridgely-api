@@ -1,6 +1,7 @@
 # TODO: Move subaccount creation and phone number provision into seperate method, called via a before fiter on #create
 # TODO: Save subaccount auth_token to db on subaccount creation
-# TODO: Save autoresponder and other settings
+# TODO: Check autoresponder and other settings
+# TODO: Better error handling on create
 
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
@@ -44,7 +45,7 @@ class V1::Admin::CompaniesController < ApplicationController
     @v1_admin_company.account_sid = @subaccount.sid
 
     # Store the company's twilio phone in settings
-    @v1_admin_company.settings = { :account_phone_number => @number }
+    @v1_admin_company.settings = @v1_admin_company.settings.merge( { :account_phone_number => @number } )
 
     if @v1_admin_company.save
       @v1_admin_company.users.create company_params[:users]
@@ -82,6 +83,6 @@ class V1::Admin::CompaniesController < ApplicationController
 
   private
   def company_params
-    params.require(:company).permit(:name, :settings, :users => [:email, :password, :name])
+    params.require(:company).permit(:name, :settings => [:autoresponder], :users => [:email, :password, :name])
   end
 end
