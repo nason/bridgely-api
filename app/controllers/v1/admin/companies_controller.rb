@@ -1,4 +1,6 @@
 # TODO: Move subaccount creation and phone number provision into seperate method, called via a before fiter on #create
+# TODO: Save subaccount auth_token to db on subaccount creation
+# TODO: Save autoresponder and other settings
 
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
@@ -24,7 +26,7 @@ class V1::Admin::CompaniesController < ApplicationController
   # POST /v1/admin/companies.json
   def create
 
-    @v1_admin_company = V1::Admin::Company.new(company_params)
+    @v1_admin_company = V1::Admin::Company.new(company_params.except(:users))
 
     # Create a subaccount for the company
     @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
@@ -45,6 +47,7 @@ class V1::Admin::CompaniesController < ApplicationController
     @v1_admin_company.settings = { :account_phone_number => @number }
 
     if @v1_admin_company.save
+      @v1_admin_company.users.create company_params[:users]
       render json: @v1_admin_company, status: :created, location: @v1_admin_company
     else
       render json: @v1_admin_company.errors, status: :unprocessable_entity
@@ -79,6 +82,6 @@ class V1::Admin::CompaniesController < ApplicationController
 
   private
   def company_params
-    params.require(:company).permit(:name, :settings)
+    params.require(:company).permit(:name, :settings, :users => [:email, :password, :name])
   end
 end

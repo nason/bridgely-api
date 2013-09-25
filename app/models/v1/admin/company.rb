@@ -18,4 +18,6 @@ class V1::Admin::Company < ActiveRecord::Base
   # Serialize settings
   serialize :settings, Hash
 
+  accepts_nested_attributes_for :users
+
 end
