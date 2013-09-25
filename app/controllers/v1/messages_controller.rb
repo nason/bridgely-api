@@ -1,19 +1,27 @@
+# TODO: Setup serializer
+# TODO: Dont take company_id as a param unless admin, determine it from the logged in user
+
+# TODO: Consider concentrating Twillio integration methods into employee_message model
+
 class V1::MessagesController < ApplicationController
   before_filter :require_token
-
-  # TODO: Strip out unnecessary params on update
-  # TODO: Setup serializer
+  before_filter :create_twilio_client, only: [:create]
 
   # GET /v1/messages
-  # GET /v1/messages.json
+  # Return all messages
   def index
-    @v1_messages = V1::Message.all
+
+    if @current_user.admin?
+      @v1_messages = V1::Message.all
+    else
+      @v1_messages = V1::Message.all.where(company_id: @current_user.company.id)
+    end
 
     render json: @v1_messages
   end
 
   # GET /v1/messages/1
-  # GET /v1/messages/1.json
+  # Find and return a single message by id
   def show
     @v1_message = V1::Message.find(params[:id])
 
@@ -21,11 +29,22 @@ class V1::MessagesController < ApplicationController
   end
 
   # POST /v1/messages
-  # POST /v1/messages.json
+  # Send an OUTGOING SMS message
   def create
-    @v1_message = V1::Message.new(message_params)
+    @v1_message = V1::Message.new( message_params.except(:employee_ids) )
+
+    if message_params[:employee_ids] === 'all'
+
+      # If :employee_ids param is 'all', send to the whole company's mobile directory
+      @v1_message.employee_ids = @v1_message.company.employee_ids
+    else
+
+      # :employees_ids is a string list of ids ('1,2,3'), convert it into an array
+      @v1_message.employee_ids = message_params[:employee_ids].split(",").map { |s| s.to_i }
+    end
 
     if @v1_message.save
+      send_sms_messages
       render json: @v1_message, status: :created, location: @v1_message
     else
       render json: @v1_message.errors, status: :unprocessable_entity
@@ -33,7 +52,7 @@ class V1::MessagesController < ApplicationController
   end
 
   # PATCH/PUT /v1/messages/1
-  # PATCH/PUT /v1/messages/1.json
+  # Update an existing message record
   def update
     @v1_message = V1::Message.find(params[:id])
 
@@ -45,7 +64,7 @@ class V1::MessagesController < ApplicationController
   end
 
   # DELETE /v1/messages/1
-  # DELETE /v1/messages/1.json
+  # Delete a message record
   def destroy
     @v1_message = V1::Message.find(params[:id])
     @v1_message.destroy
@@ -55,6 +74,7 @@ class V1::MessagesController < ApplicationController
 
   private
   def message_params
-    params.require(:message).permit(:company_id, :employee_id, :question_id, :body, :data, :direction, :status)
+    params.require(:message).permit(:company_id, :employee_ids, :question_id, :body)
   end
+
 end

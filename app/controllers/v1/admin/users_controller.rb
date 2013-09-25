@@ -1,3 +1,5 @@
+# TODO: Refactor to schema update
+
 class V1::Admin::UsersController < ApplicationController
   before_filter :require_token
 

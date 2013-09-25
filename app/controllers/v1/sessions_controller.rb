@@ -1,12 +1,6 @@
 class V1::SessionsController < ApplicationController
   before_filter :require_token, except: [:create]
 
-  # before_filter :authenticate_v1_admin_user!, except: [:create]
-
-  # respond_to :json
-
-  # before_filter :ensure_params_exist
-
   def create
     resource = V1::Admin::User.find_by_email( session_params[:email] )
 
@@ -14,8 +8,7 @@ class V1::SessionsController < ApplicationController
 
     if resource.valid_password?(session_params[:password])
       sign_in(:v1_admin_user, resource)
-      render :json=> {:success=>true, :auth_token=>resource.authorization_token, :account => current_v1_admin_user }, status: :created
-      # TODO: Create a serializer for the account data in this response
+      render json: resource
     else
       invalid_login_attempt
     end
@@ -25,8 +18,7 @@ class V1::SessionsController < ApplicationController
   def destroy
     if @current_user
       sign_out(current_v1_admin_user)
-      @current_user.authorization_token = nil
-      render json: { success: true }, status: :ok if @current_user.save
+      render :json => { success: true }, status: :ok if @current_user.update_attribute(:authorization_token, nil)
     else
       # This shouldnt ever happen, but just in case
       invalid_logout_attempt

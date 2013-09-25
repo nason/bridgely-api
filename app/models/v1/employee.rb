@@ -1,3 +1,5 @@
+# TODO: Investigate PG HSTORE and/or JSON field types for :data
+
 class V1::Employee < ActiveRecord::Base
 
   # Validations
@@ -6,7 +8,13 @@ class V1::Employee < ActiveRecord::Base
   validates :phone, :presence => true, :uniqueness => true
 
   # Associations
-  belongs_to :company
-  has_many :messages, through: :company
+  belongs_to :company, class_name: "V1::Admin::Company"
+
+  has_many :activities
+  has_many :messages, through: :activities
+  has_many :questions, through: :activities
+
+  # Serialization
+  serialize :data, Hash
 
 end

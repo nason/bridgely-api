@@ -17,3 +17,9 @@
 
 # Ignore vendor dir
 /vendor
+
+# Ignore application configuration
+/config/application.yml
+
+# Ignore gemfile.lock
+gemfile.lock

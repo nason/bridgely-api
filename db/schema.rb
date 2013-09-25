@@ -11,15 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917234213) do
+ActiveRecord::Schema.define(version: 20130921053056) do
 
-  create_table "v1_admin_companies", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "settings"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "v1_activities", force: true do |t|
+    t.integer "employee_id"
+    t.integer "message_id"
+    t.integer "question_id"
+    t.string  "message_sid", default: "pending", null: false
+    t.string  "sms_status",  default: "pending", null: false
   end
 
+  add_index "v1_activities", ["employee_id"], name: "index_v1_activities_on_employee_id"
+  add_index "v1_activities", ["message_id"], name: "index_v1_activities_on_message_id"
+  add_index "v1_activities", ["message_sid"], name: "index_v1_activities_on_message_sid"
+  add_index "v1_activities", ["question_id"], name: "index_v1_activities_on_question_id"
+
+  create_table "v1_admin_companies", force: true do |t|
+    t.string   "name",                    null: false
+    t.text     "settings",    limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "account_sid"
+  end
+
+  add_index "v1_admin_companies", ["account_sid"], name: "index_v1_admin_companies_on_account_sid"
   add_index "v1_admin_companies", ["name"], name: "index_v1_admin_companies_on_name"
 
   create_table "v1_admin_users", force: true do |t|
@@ -46,7 +61,7 @@ ActiveRecord::Schema.define(version: 20130917234213) do
     t.integer  "company_id", null: false
     t.string   "phone",      null: false
     t.string   "name",       null: false
-    t.string   "data"
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -56,30 +71,26 @@ ActiveRecord::Schema.define(version: 20130917234213) do
   add_index "v1_employees", ["phone"], name: "index_v1_employees_on_phone"
 
   create_table "v1_messages", force: true do |t|
-    t.integer  "company_id",                      null: false
-    t.integer  "employee_id",                     null: false
+    t.integer  "company_id",                       null: false
     t.integer  "question_id"
-    t.string   "body",                            null: false
-    t.string   "data"
-    t.string   "direction",                       null: false
-    t.string   "status",      default: "pending", null: false
+    t.string   "body",                             null: false
+    t.string   "direction",   default: "outbound", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "v1_messages", ["company_id"], name: "index_v1_messages_on_company_id"
-  add_index "v1_messages", ["employee_id"], name: "index_v1_messages_on_employee_id"
   add_index "v1_messages", ["question_id"], name: "index_v1_messages_on_question_id"
 
   create_table "v1_questions", force: true do |t|
-    t.string   "company_id",   null: false
-    t.string   "question",     null: false
+    t.string   "title",        null: false
     t.string   "response_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "message_id"
   end
 
-  add_index "v1_questions", ["company_id"], name: "index_v1_questions_on_company_id"
+  add_index "v1_questions", ["message_id"], name: "index_v1_questions_on_message_id"
   add_index "v1_questions", ["response_tag"], name: "index_v1_questions_on_response_tag"
 
 end

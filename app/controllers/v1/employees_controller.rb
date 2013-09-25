@@ -4,7 +4,12 @@ class V1::EmployeesController < ApplicationController
   # GET /v1/employees
   # GET /v1/employees.json
   def index
-    @v1_employees = V1::Employee.all
+
+    if @current_user.admin?
+      @v1_employees = V1::Employee.all
+    else
+      @v1_employees = V1::Employee.all.where(company_id: @current_user.company.id)
+    end
 
     render json: @v1_employees
   end

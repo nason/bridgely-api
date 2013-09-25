@@ -1,10 +1,10 @@
 require 'securerandom'
 
 class V1::Admin::User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
+
+  # Other available devise models:
   # :confirmable, :lockable, :timeoutable and :omniauthable,
   # :database_authenticatable, :registerable, :recoverable, :rememberable
-
   devise :database_authenticatable, :trackable, :validatable
 
   before_save :ensure_authorization_token
@@ -13,17 +13,13 @@ class V1::Admin::User < ActiveRecord::Base
   validates :email, :presence => true
   validates :email, :uniqueness => true
   validates :name, :presence => true
+  # validates :company_id, :presence => true
   validates :encrypted_password, :presence => true
 
   #Associations
   belongs_to :company
 
-  # def reset_authentication_token
-  #   self.authentication_token = nil
-  #   self.save
-  # end
-
-
+  # TODO: Expire tokens after some interval
   private
   def ensure_authorization_token
     generate_authorization_token if self.authorization_token.nil?
