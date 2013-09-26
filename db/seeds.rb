@@ -16,7 +16,8 @@ user1.create_company({
   name: 'ForUs',
   account_sid: TWILIO_SID,
   settings:{
-    autoresponder: 'Needs to be implemented',
+    autoresponder: 'Thanks for joining the [company] mobile directory, [name]! Visit [link] to get started',
+    responder_link_root: 'www.forusall.com',
     account_phone_number: '+15106069589'
   }
 })
@@ -27,7 +28,8 @@ user2.create_company(
   name: 'Hack Reactor',
   account_sid: HR_SUB_SID,
   settings: {
-    autoresponder: 'Needs to be implemented',
+    autoresponder: 'Thanks for joining the [company] mobile directory, [name]! Visit [link] to get started',
+    responder_link_root: 'www.hackreactor.com',
     account_phone_number: '+17864310738'
   }
 )
