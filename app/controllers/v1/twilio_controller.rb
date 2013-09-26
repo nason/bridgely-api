@@ -102,17 +102,11 @@ class V1::TwilioController < ApplicationController
   def twiml_response
 
     #Create the approriate activity and message records, MessageSID will be unknown but that's ok.
-
-    # [company] => #{@company.name}
-    # [name] => #{ @employee.name.split.first }
-
-    # autoresponder = @company[:settings][:autoresponder] # Needs interpolation
     autoresponder = interpolate_autoresponder
-    responder_link = @company[:settings][:responder_link_root] # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
 
     response = V1::Activity.new(
       :employee_id => @employee.id,
-      :message_sid => 'autoresponder',
+      :message_sid => 'autoresponder-' + @employee_id.to_s,
       :sms_status => 'sent'
     )
     message = response.create_message(
@@ -135,6 +129,12 @@ class V1::TwilioController < ApplicationController
     @company[:settings][:autoresponder]
       .gsub( /\[name\]/, @employee.name.split.first )
       .gsub( /\[company\]/, @company.name )
+      .gsub( /\[link\]/, build_responder_link )
+  end
+
+  def build_responder_link
+    @company[:settings][:responder_link_root] + "/HASH"
+    # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
   end
 
   # def validate_twilio_header
