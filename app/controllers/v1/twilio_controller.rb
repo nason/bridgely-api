@@ -106,7 +106,8 @@ class V1::TwilioController < ApplicationController
     # [company] => #{@company.name}
     # [name] => #{ @employee.name.split.first }
 
-    autoresponder = @company[:settings][:autoresponder] # Needs interpolation
+    # autoresponder = @company[:settings][:autoresponder] # Needs interpolation
+    autoresponder = interpolate_autoresponder
     responder_link = @company[:settings][:responder_link_root] # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
 
     response = V1::Activity.new(
@@ -128,6 +129,12 @@ class V1::TwilioController < ApplicationController
       end
     end
     twiml.text
+  end
+
+  def interpolate_autoresponder
+    @company[:settings][:autoresponder]
+      .gsub( /\[name\]/, @employee.name.split.first )
+      .gsub( /\[company\]/, @company.name )
   end
 
   # def validate_twilio_header
