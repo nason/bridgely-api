@@ -106,7 +106,7 @@ class V1::TwilioController < ApplicationController
 
     response = V1::Activity.new(
       :employee_id => @employee.id,
-      :message_sid => 'autoresponder-' + @employee_id.to_s,
+      :message_sid => 'autoresponder-' + @employee.id.to_s,
       :sms_status => 'sent'
     )
     message = response.create_message(
