@@ -14,6 +14,7 @@ class V1::EmployeesController < ApplicationController
     render json: @v1_employees
   end
 
+  # GET /v1/employees/company/1
   def company_index
 
     if @current_user.admin? or @current_user.company.id == params[:company_id].to_i

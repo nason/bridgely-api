@@ -20,6 +20,8 @@ class V1::MessagesController < ApplicationController
     render json: @v1_messages
   end
 
+  # GET /v1/messages/company/1
+  # Return all messages for a specific company, useful for admin switching between companies
   def company_index
 
     if @current_user.admin? or @current_user.company.id == params[:company_id].to_i
