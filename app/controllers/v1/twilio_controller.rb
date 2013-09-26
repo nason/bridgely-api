@@ -25,7 +25,8 @@ class V1::TwilioController < ApplicationController
         :direction  => 'inbound'
       )
 
-      @employee = V1::Employee.find_by "company_id = ? AND phone = ?", @company.id, twilio_params[:From]
+      # @employee = V1::Employee.find_by "company_id = ? AND phone = ?", @company.id, twilio_params[:From]
+      @employee = V1::Employee.where(company_id: @company.id).find_by(phone: twilio_params[:From])
 
       if @employee
         @record.employee_id = @employee.id
@@ -45,6 +46,7 @@ class V1::TwilioController < ApplicationController
         render :json=> {:success => true}, status: :ok
       else
         @record.save
+        @employee.save
         render :xml=> twiml_response, status: :ok
       end
     end
