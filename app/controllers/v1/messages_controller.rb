@@ -20,6 +20,17 @@ class V1::MessagesController < ApplicationController
     render json: @v1_messages
   end
 
+  def company_index
+
+    if @current_user.admin? or @current_user.company.id == params[:company_id].to_i
+      @v1_messages = V1::Message.all.where(company_id: params[:company_id])
+      render json: @v1_messages
+    else
+      render json: {error: 'forbidden'}, status: :forbidden
+    end
+
+  end
+
   # GET /v1/messages/1
   # Find and return a single message by id
   def show
