@@ -102,8 +102,13 @@ class V1::TwilioController < ApplicationController
   def twiml_response
 
     #Create the approriate activity and message records, MessageSID will be unknown but that's ok.
-    #TODO: Pull the autoresponder from @company.settings[:autoresponder]
-    autoresponder = "Thanks for joining the #{@company.name} mobile directory, #{ @employee.name.split.first }!"
+
+    # [company] => #{@company.name}
+    # [name] => #{ @employee.name.split.first }
+
+    autoresponder = @company[:settings][:autoresponder] # Needs interpolation
+    responder_link = @company[:settings][:responder_link_root] # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
+
     response = V1::Activity.new(
       :employee_id => @employee.id,
       :message_sid => 'autoresponder',
