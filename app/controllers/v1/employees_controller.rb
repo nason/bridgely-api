@@ -14,6 +14,17 @@ class V1::EmployeesController < ApplicationController
     render json: @v1_employees
   end
 
+  def company_index
+
+    if @current_user.admin? or @current_user.company.id == params[:company_id].to_i
+      @v1_employees = V1::Employee.all.where(company_id: params[:company_id])
+      render json: @v1_employees
+    else
+      render json: {error: 'forbidden'}, status: :forbidden
+    end
+
+  end
+
   # GET /v1/employees/1
   # GET /v1/employees/1.json
   def show

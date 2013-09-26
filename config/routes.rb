@@ -13,6 +13,8 @@ BridgelyApi::Application.routes.draw do
     resources :messages, except: [:new, :edit]
     resources :employees, except: [:new, :edit]
 
+    get "/employees/company/:company_id" => "employees#company_index"
+
     namespace :admin do
       devise_for :users, :class_name => "V1::Admin::User", :skip => :all
       resources :users, except: [:new, :edit]
