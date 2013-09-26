@@ -2,7 +2,6 @@
 # TODO: Save subaccount auth_token to db on subaccount creation
 # TODO: Check autoresponder and other settings
 # TODO: Better error handling on create
-# TODO: Implement autoresponder interpolation
 
 class V1::Admin::CompaniesController < ApplicationController
   before_filter :require_token
