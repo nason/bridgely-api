@@ -84,6 +84,6 @@ class V1::Admin::CompaniesController < ApplicationController
 
   private
   def company_params
-    params.require(:company).permit(:name, :settings => [:autoresponder], :users => [:email, :password, :name])
+    params.require(:company).permit(:name, :settings => [:autoresponder, :responder_link_root], :users => [:email, :password, :name])
   end
 end
