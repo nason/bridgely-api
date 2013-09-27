@@ -1,10 +1,7 @@
 # TODO: Make sure Twilio requests pass validation for subaccounts => Need to store subaccount auth key on company record => @subaccount.auth_token
 
-# TODO: Prevent followups after response and before another question from overwriting responses => store them in an :unprocessable array inside data?
-#       Right now, labels keep getting added to labels, and values get overridden in tags
-
 class V1::TwilioController < ApplicationController
-  # before_filter :validate_twilio_header
+  before_filter :validate_twilio_header
 
   # POST /v1/twilio/inbound
   # Request:  Twilio POSTS incoming text message data to this path
@@ -137,20 +134,23 @@ class V1::TwilioController < ApplicationController
     @company[:settings][:responder_link_root] + "/##{@company.short_name}/#{@employee.id}"
   end
 
-  # def validate_twilio_header
-  #   # First, instantiate a RequestValidator object with  SUBaccount's AuthToken.
-  #   validator = Twilio::Util::RequestValidator.new( @subaccount.TWILIO_AUTH_TOKEN )
+  def validate_twilio_header
 
-  #   # Then gather the data required to validate the request
-  #   uri = request.original_url
+    @company = V1::Admin::Company.find_by account_sid: twilio_params[:AccountSid]
 
-  #   # Collect all parameters passed from Twilio.
-  #   params = env['rack.request.form_hash']
+    # First, instantiate a RequestValidator object with  SUBaccount's AuthToken.
+    validator = Twilio::Util::RequestValidator.new( @company.sub_auth_token )
 
-  #   # Grab the signature from the HTTP header.
-  #   signature = env['HTTP_X_TWILIO_SIGNATURE']
+    # Then gather the data required to validate the request
+    uri = request.original_url
 
-  #   # Finally, call the validator's #validate method.
-  #   head(422) unless validator.validate(uri, params, signature) #true if the request is from Twilio
-  # end
+    # Collect all parameters passed from Twilio.
+    params = env['rack.request.form_hash']
+
+    # Grab the signature from the HTTP header.
+    signature = env['HTTP_X_TWILIO_SIGNATURE']
+
+    # Finally, call the validator's #validate method.
+    render status: :unprocessable_entity unless validator.validate(uri, params, signature) #true if the request is from Twilio
+  end
 end
