@@ -86,6 +86,7 @@ class V1::TwilioController < ApplicationController
         @employee[:data][:tags][ @last_employee_question.response_tag ] = @record.message.body
       else
 
+        # THIS FUNCTIONALITY HAS BEEN REMOVED FROM THE FRONTEND!
         # first make sure labels exists, otherwise make it an empty array
         @employee[:data][:labels] = [] unless @employee[:data][:labels]
 
