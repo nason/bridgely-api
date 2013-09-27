@@ -44,6 +44,9 @@ class V1::Admin::CompaniesController < ApplicationController
     # Store the company's account_sid in DB
     @v1_admin_company.account_sid = @subaccount.sid
 
+    # Store the company's subaccount auth token for Twilio header verification
+    @v1_admin_company.sub_auth_token = @subaccount.auth_token
+
     # Store the company's twilio phone in settings
     @v1_admin_company.settings = @v1_admin_company.settings.merge( { :account_phone_number => @number } )
 
@@ -83,6 +86,6 @@ class V1::Admin::CompaniesController < ApplicationController
 
   private
   def company_params
-    params.require(:company).permit(:name, :settings => [:autoresponder, :responder_link_root], :users => [:email, :password, :name])
+    params.require(:company).permit(:name, :short_name, :settings => [:autoresponder, :responder_link_root], :users => [:email, :password, :name])
   end
 end
