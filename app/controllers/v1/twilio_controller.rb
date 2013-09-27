@@ -86,6 +86,7 @@ class V1::TwilioController < ApplicationController
         @employee[:data][:tags][ @last_employee_question.response_tag ] = @record.message.body
       else
 
+        # THIS FUNCTIONALITY HAS BEEN REMOVED FROM THE FRONTEND!
         # first make sure labels exists, otherwise make it an empty array
         @employee[:data][:labels] = [] unless @employee[:data][:labels]
 
@@ -133,7 +134,7 @@ class V1::TwilioController < ApplicationController
   end
 
   def build_responder_link
-    @company[:settings][:responder_link_root] + "/HASH"
+    @company[:settings][:responder_link_root] + "/#{@company.id}-#{@employee.id}"
     # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
   end
 
