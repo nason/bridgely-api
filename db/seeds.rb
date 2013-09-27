@@ -14,7 +14,9 @@ admin.update_attribute( :admin, true )
 user1 = V1::Admin::User.new( {name: 'David ForUs', email: 'forus@nason.us', password: 'test_password' } )
 user1.create_company({
   name: 'ForUs',
+  short_name: 'forus',
   account_sid: TWILIO_SID,
+  sub_auth_token: TWILIO_AUTH_TOKEN,
   settings:{
     autoresponder: 'Thanks for joining the [company] mobile directory, [name]! Visit [link] to get started',
     responder_link_root: 'www.forusall.com',
@@ -26,7 +28,9 @@ user1.save
 user2 = V1::Admin::User.new( {name: 'Michael Reactor', email: 'hr@nason.us', password: 'test_password' } )
 user2.create_company(
   name: 'Hack Reactor',
+  short_name: 'hackr',
   account_sid: HR_SUB_SID,
+  sub_auth_token: HR_SUB_AUTH_TOKEN,
   settings: {
     autoresponder: 'Thanks for joining the [company] mobile directory, [name]! Visit [link] to get started',
     responder_link_root: 'www.hackreactor.com',
