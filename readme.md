@@ -11,7 +11,10 @@ Environment variables must be configured for Bridgely-API to communicate with Tw
 2. Add application configuration variables here, as shown below:
   <tt>TWILIO_SID: "123abc"</tt>
   <tt>TWILIO_AUTH_TOKEN: "abc123"</tt>
-  * Note: you can group these in test, development, and production if you need
+  <tt>TWILIO_APP_SID: "a1b2c3"</tt>
+  * Note: you will need to create a Twilio app with the SMS status and SMS inbound URLs configured to point to your deployment.
+  
+  * You can group these envirionments in test, development, and production if you need
 
 ### Ruby version
 2.0.0
@@ -32,8 +35,6 @@ Environment variables must be configured for Bridgely-API to communicate with Tw
 If the frontend is served from the public folder, disable CORS headers. Otherwise, leave them on and whitelist trusted origins
 
 ### Database creation
-<tt>rake db:migrate</tt>
--or-
 <tt>rake db:schema:load</tt>
 
 ### Database initialization
