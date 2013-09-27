@@ -134,7 +134,7 @@ class V1::TwilioController < ApplicationController
   end
 
   def build_responder_link
-    @company[:settings][:responder_link_root] + "/HASH"
+    @company[:settings][:responder_link_root] + "/#{@company.id}-#{@employee.id}"
     # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
   end
 
