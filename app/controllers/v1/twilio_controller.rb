@@ -135,7 +135,6 @@ class V1::TwilioController < ApplicationController
 
   def build_responder_link
     @company[:settings][:responder_link_root] + "/##{@company.short_name}/#{@employee.id}"
-    # + /some-hash-related-to-either-the-employees-phone-number-or-company_id+employee_id
   end
 
   # def validate_twilio_header
