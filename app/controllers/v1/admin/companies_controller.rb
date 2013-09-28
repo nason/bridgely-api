@@ -78,7 +78,18 @@ class V1::Admin::CompaniesController < ApplicationController
     if @current_user.admin? or @current_user.company.id.to_s === params[:id]
       @v1_admin_company = V1::Admin::Company.find(params[:id])
 
-      if @v1_admin_company.update(company_params)
+      if company_params[:settings]
+        if company_params[:settings][:autoresponder]
+          @v1_admin_company.settings = @v1_admin_company.settings.merge( { :autoresponder => company_params[:settings][:autoresponder] } )
+        end
+
+        if company_params[:settings][:responder_link_root]
+          @v1_admin_company.settings = @v1_admin_company.settings.merge( { :responder_link_root => company_params[:settings][:responder_link_root] } )
+        end
+      end
+
+      if @v1_admin_company.update(company_params.except(:settings))
+        @v1_admin_company.save
         render json: @v1_admin_company, status: :ok
       else
         render json: @v1_admin_company.errors, status: :unprocessable_entity
