@@ -20,7 +20,7 @@ class V1::MessagesController < ApplicationController
     render json: @v1_messages
   end
 
-  # GET /v1/messages/company/1
+  # GET /v1/companies/1/messages
   # Return all messages for a specific company, useful for admin switching between companies
   def company_index
 
