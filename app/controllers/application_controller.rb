@@ -52,7 +52,8 @@ class ApplicationController < ActionController::API
         @sms = @account.messages.create({
           :from => @account_number,
           :to => recipient.phone,
-          :body => @v1_message.body
+          :body => @v1_message.body.gsub( /\[name\]/, recipient.name.split.first )
+                                   .gsub( /\[link\]/, @company[:settings][:responder_link_root] + "/##{@company.short_name}/#{recipient.id}" )
         })
 
         @activity = V1::Activity.where( :message_id => @v1_message.id, :employee_id => recipient.id ).first_or_initialize
