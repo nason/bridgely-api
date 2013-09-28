@@ -11,6 +11,12 @@ class V1::Admin::UsersController < ApplicationController
     render json: @v1_admin_users
   end
 
+  def company_index
+    @v1_admin_users = V1::Admin::User.where(company_id: params[:company_id]).all
+
+    render json: @v1_admin_users
+  end
+
   # GET /v1/admin/users/1
   # GET /v1/admin/users/1.json
   def show
