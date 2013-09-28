@@ -26,7 +26,8 @@ class V1::MessagesController < ApplicationController
     @v1_employee = V1::Employee.find(params[:employee_id])
 
     if @current_user.admin? or @current_user.company_id === @v1_employee.company.id
-      @v1_activity = V1::Activity.find_by employee_id: @v1_employee.id
+      @v1_activity = V1::Activity.where( employee_id: @v1_employee.id )
+
       render json: @v1_activity
     else
       render json: {error: 'forbidden'}, status: :forbidden
