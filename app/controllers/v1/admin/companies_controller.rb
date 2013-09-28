@@ -10,65 +10,94 @@ class V1::Admin::CompaniesController < ApplicationController
   # GET /v1/admin/companies
   # GET /v1/admin/companies.json
   def index
-    @v1_admin_companies = V1::Admin::Company.all
 
-    render json: @v1_admin_companies
+    if @current_user.admin?
+      @v1_admin_companies = V1::Admin::Company.all
+      render json: @v1_admin_companies
+    else
+      head :forbidden
+    end
   end
 
   # GET /v1/admin/companies/1
   # GET /v1/admin/companies/1.json
   def show
-    @v1_admin_company = V1::Admin::Company.find(params[:id])
 
-    render json: @v1_admin_company
+    if @current_user.admin? or @current_user.company.id.to_s === params[:id]
+      @v1_admin_company = V1::Admin::Company.find(params[:id])
+      render json: @v1_admin_company
+    else
+      head :forbidden
+    end
   end
 
   # POST /v1/admin/companies
   # POST /v1/admin/companies.json
   def create
 
-    @v1_admin_company = V1::Admin::Company.new(company_params.except(:users))
+    if @current_user.admin?
+      @v1_admin_company = V1::Admin::Company.new(company_params.except(:users))
 
-    # Create a subaccount for the company
-    @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
+      # Create a subaccount for the company
+      @subaccount = @twilio_client.accounts.create( :friendly_name => company_params[:name] )
 
-    # Purchase the first available US phone number for the subaccount.
-    # Use the Bridgely Twilio App SID to configure all numbers to callback the same resources;
-    # This could be done on a per-account basis in the future.
-    @number = @subaccount.available_phone_numbers.get('US').local.list.first.phone_number
-    @subaccount.incoming_phone_numbers.create(
-      :phone_number => @number,
-      :sms_application_sid => TWILIO_APP_SID
-    )
+      # Purchase the first available US phone number for the subaccount.
+      # Use the Bridgely Twilio App SID to configure all numbers to callback the same resources;
+      # This could be done on a per-account basis in the future.
+      @number = @subaccount.available_phone_numbers.get('US').local.list.first.phone_number
+      @subaccount.incoming_phone_numbers.create(
+        :phone_number => @number,
+        :sms_application_sid => TWILIO_APP_SID
+      )
 
-    # Store the company's account_sid in DB
-    @v1_admin_company.account_sid = @subaccount.sid
+      # Store the company's account_sid in DB
+      @v1_admin_company.account_sid = @subaccount.sid
 
-    # Store the company's subaccount auth token for Twilio header verification
-    @v1_admin_company.sub_auth_token = @subaccount.auth_token
+      # Store the company's subaccount auth token for Twilio header verification
+      @v1_admin_company.sub_auth_token = @subaccount.auth_token
 
-    # Store the company's twilio phone in settings
-    @v1_admin_company.settings = @v1_admin_company.settings.merge( { :account_phone_number => @number } )
+      # Store the company's twilio phone in settings
+      @v1_admin_company.settings = @v1_admin_company.settings.merge( { :account_phone_number => @number } )
 
-    if @v1_admin_company.save
-      @v1_admin_company.users.create company_params[:users]
-      render json: @v1_admin_company, status: :created, location: @v1_admin_company
+      if @v1_admin_company.save
+        @v1_admin_company.users.create company_params[:users]
+        render json: @v1_admin_company, status: :created, location: @v1_admin_company
+      else
+        render json: @v1_admin_company.errors, status: :unprocessable_entity
+      end
     else
-      render json: @v1_admin_company.errors, status: :unprocessable_entity
+      head :forbidden
     end
+
   end
 
   # PATCH/PUT /v1/admin/companies/1
   # PATCH/PUT /v1/admin/companies/1.json
   def update
 
-    @v1_admin_company = V1::Admin::Company.find(params[:id])
+    if @current_user.admin? or @current_user.company.id.to_s === params[:id]
+      @v1_admin_company = V1::Admin::Company.find(params[:id])
 
-    if @v1_admin_company.update(company_params)
-      render json: @v1_admin_company, status: :ok
+      if company_params[:settings]
+        if company_params[:settings][:autoresponder]
+          @v1_admin_company.settings = @v1_admin_company.settings.merge( { :autoresponder => company_params[:settings][:autoresponder] } )
+        end
+
+        if company_params[:settings][:responder_link_root]
+          @v1_admin_company.settings = @v1_admin_company.settings.merge( { :responder_link_root => company_params[:settings][:responder_link_root] } )
+        end
+      end
+
+      if @v1_admin_company.update(company_params.except(:settings))
+        @v1_admin_company.save
+        render json: @v1_admin_company, status: :ok
+      else
+        render json: @v1_admin_company.errors, status: :unprocessable_entity
+      end
     else
-      render json: @v1_admin_company.errors, status: :unprocessable_entity
+      head :forbidden
     end
+
   end
 
   # DELETE /v1/admin/companies/1
@@ -77,11 +106,15 @@ class V1::Admin::CompaniesController < ApplicationController
 
     # TODO: Transfer number to main account? Or delete it?
     # TODO: Delete or suspend subaccount?
+    if @current_user.admin?
+      @v1_admin_company = V1::Admin::Company.find(params[:id])
+      @v1_admin_company.destroy
 
-    @v1_admin_company = V1::Admin::Company.find(params[:id])
-    @v1_admin_company.destroy
+      head :no_content
+    else
+      head :forbidden
+    end
 
-    head :no_content
   end
 
   private

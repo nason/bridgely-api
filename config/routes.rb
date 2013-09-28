@@ -13,9 +13,14 @@ BridgelyApi::Application.routes.draw do
     resources :messages, except: [:new, :edit]
     resources :employees, except: [:new, :edit]
 
-    get "/employees/company/:company_id" => "employees#company_index"
-    get "/messages/company/:company_id" => "messages#company_index"
+    # Get a company's employee directory
+    get "/companies/:company_id/employees" => "employees#company_index"
 
+    # Get a company's message records
+    get "/companies/:company_id/messages" => "messages#company_index"
+
+    # Get a company's user list
+    get "/companies/:company_id/users" => 'users#company_index'
 
     namespace :admin do
       devise_for :users, :class_name => "V1::Admin::User", :skip => :all
