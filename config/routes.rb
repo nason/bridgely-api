@@ -22,6 +22,9 @@ BridgelyApi::Application.routes.draw do
     # Get a company's user list
     get "/companies/:company_id/users" => 'users#company_index'
 
+    # Get an employee's messages
+    get "/employees/:employee_id/messages" => 'messages#employee_index'
+
     namespace :admin do
       devise_for :users, :class_name => "V1::Admin::User", :skip => :all
       resources :users, except: [:new, :edit]
