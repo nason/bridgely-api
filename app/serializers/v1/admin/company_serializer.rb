@@ -1,6 +1,5 @@
 class V1::Admin::CompanySerializer < ActiveModel::Serializer
-  attributes :id, :name, :settings, :users
-  # removed :account_sid from above
+  attributes :id, :name, :settings
 
-  # has_many :users, embed :id
+  # removed :account_sid from above
 end
