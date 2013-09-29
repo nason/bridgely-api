@@ -26,7 +26,7 @@ BridgelyApi::Application.routes.draw do
     get "/employees/:employee_id/messages" => 'messages#employee_index'
 
     #Get a question's employees
-    get "/questions/:question_id/employees" => 'question#employee_index'
+    get "/questions/:question_id/employees" => 'questions#employee_index'
 
     namespace :admin do
       devise_for :users, :class_name => "V1::Admin::User", :skip => :all
