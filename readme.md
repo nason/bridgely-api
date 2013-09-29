@@ -32,7 +32,11 @@ Environment variables must be configured for Bridgely-API to communicate with Tw
 ### Configuration
 <tt>bundle install</tt>
 
-If the frontend is served from the public folder, disable CORS headers. Otherwise, leave them on and whitelist trusted origins
+If the frontend is served from the public folder you can disable CORS headers. Otherwise, leave them on and whitelist trusted origins in <tt>app/application_controller.rb</tt>
+
+Update <tt>db/seeds.rb</tt> to setup your admin user, and any companies or company users you may need to import.
+
+Bridgely API creates a Twilio subaccount for each company. If you need to transfer a number, you'll need to open <tt>rails console</tt> and [follow Twilio's excellent documentation](https://www.twilio.com/docs/api/rest/subaccounts#exchanging-numbers).
 
 ### Database creation
 <tt>rake db:schema:load</tt>
@@ -44,4 +48,9 @@ If the frontend is served from the public folder, disable CORS headers. Otherwis
 Coming soon!
 
 ### Deployment instructions
-<tt>rake figaro:heroku</tt> to push environment variables to Heroku
+Make sure your environment variables are set, and <tt>rails server</tt>. You can <tt>rake figaro:heroku</tt> to push environment variables to Heroku.
+
+*SSL is highly reccomended.* You'll have to configure that on your own...
+
+Your Twilio account must be verified and funded in order for this API to send or receive any messages, or to create any subaccounts. See [Twilio's pricing page](https://www.twilio.com/sms/pricing) for information on operating costs.
+
