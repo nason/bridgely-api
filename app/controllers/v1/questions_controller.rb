@@ -17,6 +17,16 @@ class V1::QuestionsController < ApplicationController
     render json: @v1_questions
   end
 
+  def employee_index
+    @v1_question = V1::Question.find(params[:question_id])
+    if @current_user.admin? or @current_user.company.id == @v1_question.message.company_id.to_i
+      @v1_employees = @v1_question.message.employees
+      render json: @v1_employees
+    else
+      render json: {error: 'forbidden'}, status: :forbidden
+    end
+  end
+
   # GET /v1/questions/1
   # Find and return a single question by id
   def show
